@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Facti, non parole · Colloquio con l'avatar (demo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.186/build/three.module.js/+esm",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186/examples/jsm/"
+} }
+</script>
+<style>
+:root{--bg:#F1F1F1;--ink:#111;--cyan:#00F3F3;--yellow:#F0F100;--orange:#FF8828;--pink:#FF4BCD;--navy:#1A1D56;--ok:#0B7A3B;--ko:#B3261E;--card:#fff;--fs:21px}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{font-size:var(--fs)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Archivo,"Helvetica Neue",Arial,system-ui,sans-serif;line-height:1.5;letter-spacing:.01em}
+h1,h2,h3{font-family:"Archivo Black","Arial Black",Impact,system-ui,sans-serif;text-transform:uppercase;line-height:1.1;margin:0 0 .6em}
+h1{font-size:2.6rem}h2{font-size:1.8rem}h3{font-size:1.2rem}
+p{margin:0 0 .8em}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 48px 48px}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:24px;flex-wrap:wrap}
+header.top .brand{font-family:"Archivo Black","Arial Black",sans-serif;text-transform:uppercase;font-size:1rem}
+.sim{font-size:.8rem;font-weight:800;background:#111;color:#fff;border-radius:8px;padding:4px 10px}
+.bar{display:inline;padding:.05em .3em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.c{background:var(--cyan)}.y{background:var(--yellow)}.o{background:var(--orange)}.p{background:var(--pink)}
+.screen{display:none}.screen.on{display:block;animation:fade .25s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.navy{background:var(--navy);color:#fff;border-radius:18px;padding:44px 52px}
+.navy .bar{color:#111}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:22px;box-shadow:0 1px 0 #0001}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0;list-style:none;padding:0}
+.strip li{border:3px solid #fff6;border-radius:12px;padding:16px 14px;font-weight:800;font-size:1rem;text-align:center;color:#fffc}
+.strip li small{display:block;font-weight:400;font-size:.8rem;margin-top:4px}
+.strip li.now{background:var(--yellow);color:#111;border-color:var(--yellow)}
+.note{font-size:.85rem;opacity:.9}
+ul.clean{margin:0;padding-left:1.2em}ul.clean li{margin-bottom:.4em}
+button{font:inherit;font-weight:800;font-size:1.05rem;border:0;border-radius:12px;padding:18px 32px;min-height:60px;cursor:pointer;background:var(--ink);color:#fff;text-transform:uppercase;letter-spacing:.03em}
+button:focus-visible,input:focus-visible{outline:4px solid var(--orange);outline-offset:3px}
+button.big{background:var(--yellow);color:#111;font-size:1.25rem;padding:22px 44px}
+button.ghost{background:transparent;color:inherit;border:3px solid currentColor}
+button[disabled]{opacity:.35;cursor:not-allowed}
+.actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px;align-items:center}
+/* colloquio */
+.talk{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:26px;align-items:start}
+.stage{background:var(--navy);border-radius:18px;padding:18px;color:#fff;position:sticky;top:12px}
+#avatar{position:relative;width:100%;aspect-ratio:1/1;max-height:62vh;border-radius:14px;overflow:hidden;background:radial-gradient(circle at 50% 35%,#2b3080,#1A1D56 70%)}
+#avatar3d{position:absolute;inset:0;overflow:hidden}
+#avatar3d canvas{max-width:100%!important;max-height:100%!important}
+html,body{overflow-x:hidden}
+#avatarSvg{position:absolute;inset:0;width:100%;height:100%}
+.status{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.state{font-weight:800;text-transform:uppercase;font-size:.9rem;border-radius:999px;padding:.35em 1em;background:#fff2}
+.state.speak{background:var(--yellow);color:#111}.state.listen{background:var(--pink);color:#111}.state.think{background:var(--cyan);color:#111}
+.mode{font-size:.8rem;font-weight:800;border-radius:8px;padding:4px 10px;background:var(--cyan);color:#111}
+.mode.demo{background:var(--orange)}
+.sub{min-height:3.2em;margin-top:12px;font-size:1.05rem;font-weight:600}
+.log{background:#fff;border-radius:16px;padding:20px;height:52vh;min-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:88%;padding:12px 16px;border-radius:14px;font-size:1rem;line-height:1.4}
+.msg.ai{background:#EEF0FF;border-left:6px solid var(--navy);align-self:flex-start}
+.msg.me{background:var(--yellow);align-self:flex-end}
+.msg .who{display:block;font-size:.7rem;font-weight:800;text-transform:uppercase;opacity:.7}
+.inrow{display:flex;gap:10px;margin-top:14px}
+.inrow input{flex:1;font:inherit;font-size:1.05rem;padding:14px 16px;border:3px solid #111;border-radius:12px;min-width:0}
+.inrow button{padding:14px 20px}
+#micBtn{background:var(--pink);color:#111}
+#micBtn.on{background:var(--ko);color:#fff}
+.steps{height:12px;background:#ddd;border-radius:8px;overflow:hidden;margin:14px 0 4px}
+.steps span{display:block;height:100%;background:var(--navy);width:0;transition:width .3s}
+/* scheda */
+.scheda h3{margin-top:1em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0}
+.chips li{background:var(--cyan);border-radius:999px;padding:.3em .9em;font-weight:800;font-size:.95rem}
+.chips.t li{background:#fff;border:3px solid #111}
+.cat{font-family:"Archivo Black","Arial Black",sans-serif;text-transform:uppercase;font-size:1.6rem;background:var(--yellow);display:inline-block;padding:.15em .5em;border-radius:8px}
+.reminder{background:var(--yellow);border-radius:16px;padding:18px 24px;font-weight:800;margin:18px 0}
+footer{margin-top:30px;font-size:.75rem;opacity:.7}
+@media (max-width:1100px){:root{--fs:19px}.wrap{padding:22px 28px 40px}}
+@media (max-width:820px){
+  :root{--fs:17px}h1{font-size:1.9rem}h2{font-size:1.4rem}
+  .wrap{padding:16px 16px 36px}
+  .grid2,.talk{grid-template-columns:minmax(0,1fr)}
+  .inrow button{padding:12px 14px}
+  #micBtn .lbl,#sendBtn .lbl{display:none}
+  .strip{grid-template-columns:1fr 1fr}
+  .navy{padding:26px 20px}.card{padding:20px 18px}
+  .stage{position:static;padding:12px}
+  #avatar{aspect-ratio:4/3;max-height:34vh}
+  .log{height:40vh;min-height:240px}
+  .actions button{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">Facti, non parole</div>
+    <div class="sim">Simulazione · progetto hackathon, non è un prodotto ufficiale Factanza</div>
+  </header>
+
+  <!-- 1. BENVENUTO -->
+  <section class="screen on" id="s-intro">
+    <div class="navy">
+      <h1>Benvenuto <span class="bar y">e grazie!</span></h1>
+      <p style="font-size:1.15rem">Grazie per esserti iscritto al <b>colloquio d'ingresso</b>.<br>È il colloquio da <b>5 €</b> che apre il percorso.</p>
+      <ol class="strip">
+        <li class="now">1. Colloquio d'ingresso<small>avatar AI · 5 €</small></li>
+        <li>2. Colloquio umano<small>con Factanza</small></li>
+        <li>3. Corso online<small>24 h soft skill</small></li>
+        <li>4. In azienda<small>36+ h · prova finale</small></li>
+      </ol>
+    </div>
+    <div class="grid2" style="margin-top:22px">
+      <div class="card">
+        <h3>Come si usa</h3>
+        <ul class="clean">
+          <li>Mettiti in un <b>posto tranquillo</b>.</li>
+          <li>Usa <b>Chrome</b>.</li>
+          <li>Quando il browser lo chiede, <b>consenti il microfono</b>.</li>
+          <li>Parla in modo naturale: <b>studi, progetti, lavori</b>.</li>
+          <li>Preferisci scrivere? <b>Puoi scrivere</b> le risposte.</li>
+          <li>Dura circa <b>10 minuti</b>.</li>
+          <li><span class="bar y"><b>Non c'è nessun voto.</b></span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Cosa ti aspetta</h3>
+        <ul class="clean">
+          <li>L'avatar ti fa <b>alcune domande</b>, una alla volta.</li>
+          <li>Riconosce la tua <b>categoria di hard skill</b>.</li>
+          <li>Alla fine ricevi un <b>PDF con la scheda hard skill</b>.</li>
+          <li>Dopo c'è il <b>colloquio umano</b>. Questo ti aiuta a prepararti.</li>
+          <li><b>Nessuna promessa di assunzione.</b></li>
+        </ul>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="big" id="startBtn">Inizia con l'avatar</button>
+      <label style="font-weight:800"><input type="checkbox" id="voiceOn" checked style="width:22px;height:22px;vertical-align:middle"> Avatar con voce</label>
+    </div>
+    <p class="note" style="margin-top:12px">Simulazione · progetto hackathon, non è un prodotto ufficiale Factanza.</p>
+  </section>
+
+  <!-- 2. COLLOQUIO -->
+  <section class="screen" id="s-talk">
+    <div class="talk">
+      <div class="stage">
+        <div id="avatar">
+          <div id="avatar3d"></div>
+          <svg id="avatarSvg" viewBox="0 0 400 400" aria-label="Avatar" hidden>
+            <circle cx="200" cy="215" r="130" fill="#F2C9A8"/>
+            <path d="M70 200 Q75 70 200 70 Q325 70 330 200 Q320 120 200 115 Q80 120 70 200Z" fill="#2a1d14"/>
+            <ellipse id="eyeL" cx="155" cy="200" rx="13" ry="15" fill="#1A1D56"/>
+            <ellipse id="eyeR" cx="245" cy="200" rx="13" ry="15" fill="#1A1D56"/>
+            <path d="M135 172 Q155 162 175 170" stroke="#2a1d14" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <path d="M225 170 Q245 162 265 172" stroke="#2a1d14" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <ellipse cx="135" cy="250" rx="18" ry="10" fill="#FF8828" opacity=".25"/>
+            <ellipse cx="265" cy="250" rx="18" ry="10" fill="#FF8828" opacity=".25"/>
+            <ellipse id="mouth" cx="200" cy="275" rx="34" ry="4" fill="#7a1f2b"/>
+            <rect x="120" y="345" width="160" height="60" rx="20" fill="#00F3F3"/>
+          </svg>
+        </div>
+        <div class="sub" id="subtitle"></div>
+        <div class="status">
+          <span class="state" id="state">Pronto</span>
+          <span class="mode" id="modeTag">Modalità AI</span>
+        </div>
+      </div>
+      <div>
+        <div class="log" id="log" aria-live="polite"></div>
+        <div class="steps"><span id="stepsBar"></span></div>
+        <div class="note" id="stepsTxt">Domanda 1 di circa 8</div>
+        <form class="inrow" id="form" autocomplete="off">
+          <button type="button" id="micBtn" title="Parla" aria-label="Parla">🎤<span class="lbl"> Parla</span></button>
+          <input id="txt" type="text" placeholder="Scrivi qui la tua risposta…" aria-label="Risposta">
+          <button type="submit" id="sendBtn" aria-label="Invia">➤<span class="lbl"> Invia</span></button>
+        </form>
+        <div class="actions">
+          <button class="ghost" id="endBtn" type="button">Termina e crea la scheda</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. SCHEDA -->
+  <section class="screen" id="s-result">
+    <h2>La tua <span class="bar c">scheda hard skill</span></h2>
+    <div class="card scheda" id="scheda"></div>
+    <div class="reminder">Nessun voto, nessuna promessa di assunzione. La scheda serve per il colloquio umano.</div>
+    <div class="actions">
+      <button class="big" id="pdfBtn">Scarica il PDF</button>
+      <button class="ghost" id="againBtn">Rifai il colloquio</button>
+      <a href="../quiz/" style="font-weight:800;color:inherit">Vai al quiz di teoria →</a>
+    </div>
+  </section>
+
+  <footer>Facti, non parole · Team 19 · H-ACK H-FARM College × Factanza, 21-22 novembre 2026 · Simulazione, non è un prodotto ufficiale Factanza.
+  Avatar 3D: <a href="https://github.com/met4citizen/TalkingHead" style="color:inherit">TalkingHead</a> (MIT) · modello "brunette" di Ready Player Me (CC BY-NC 4.0).</footer>
+</div>
+
+<script type="module">
+// ================= CONFIGURAZIONE =================
+// URL del Worker Cloudflare (proxy Gemini). Vuoto = solo modalità demo con domande fisse.
+const PROXY_URL = "";
+const AI_TIMEOUT_MS = 9000;
+// ==================================================
+
+const qs = new URLSearchParams(location.search);
+const FORCE_DEMO = qs.has("demo");
+const $ = (id) => document.getElementById(id);
+const show = (id) => { document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id)); window.scrollTo(0,0); };
+
+const state = { mode: (PROXY_URL && !FORCE_DEMO) ? "ai" : "demo", history: [], answers: [], step: 0, done: false, scheda: null, busy: false };
+
+// ---------- domande fisse (modalità demo) ----------
+const QUESTIONS = [
+  () => "Ciao! Sono l'avatar di Facti, non parole. Ti faccio qualche domanda sulle tue hard skill. Non ti do voti. Come ti chiami?",
+  (n) => `Piacere${n ? ", " + n : ""}! Cosa studi, o cosa hai studiato?`,
+  () => "Bene. Raccontami un progetto che hai fatto, all'università o per conto tuo.",
+  () => "Hai fatto lavori, stage o volontariato? Cosa facevi, in concreto?",
+  () => "Quali strumenti o software usi? Per esempio Excel, Canva, Python.",
+  () => "Quali lingue parli, e a che livello?",
+  () => "C'è un risultato concreto di cui sei fiero o fiera?",
+  () => "Ultima domanda: che ruolo cerchi per il tuo primo lavoro?",
+];
+const CLOSING = "Grazie! La tua scheda hard skill è pronta. Ti servirà per il colloquio umano. In bocca al lupo!";
+const OFFTOPIC = /(ricett|carbonara|barzellett|compiti|scrivi(mi)? (un|una) (codice|tema|poesia)|chi ti ha (fatto|creato)|ignora le|prompt|istruzioni|politic|calcio)/i;
+
+// ---------- regole a parole chiave ----------
+const CATS = [
+  ["Dati e analisi", /\b(dati|data|analisi|analist|statistic|excel|power ?bi|tableau|sql|python|r studio|dashboard|machine learning)\b/gi, ["Excel e tabelle pivot", "Lettura di un dashboard", "Come racconti un'analisi a chi non è tecnico"]],
+  ["Sviluppo software e IT", /\b(programm|sviluppat|developer|codice|software|java|javascript|python|react|app|sito|web|informatic|git|cloud|database)\b/gi, ["Un progetto di codice da mostrare (GitHub)", "Come hai risolto un bug", "Lavorare in team con Git"]],
+  ["Marketing e comunicazione", /\b(marketing|social|instagram|tiktok|linkedin|comunicazion|campagn|ads|seo|brand|contenut|copy|giornal|pubblicit)\b/gi, ["Una campagna che hai seguito e i risultati", "Strumenti di analisi dei social", "Come scrivi per un pubblico preciso"]],
+  ["Design e creatività", /\b(design|grafic|canva|figma|photoshop|illustrator|ux|ui|video|foto|creativ|architett)\b/gi, ["Un portfolio con 3 lavori", "Come ricevi un feedback sul design", "Gli strumenti che usi e perché"]],
+  ["Economia, finanza e amministrazione", /\b(economi|finanz|contabil|bilanci|amministraz|banca|budget|controllo di gestione|revision|commercialist)\b/gi, ["Leggere un bilancio semplice", "Excel per budget e previsioni", "Un caso pratico di analisi dei costi"]],
+  ["Ingegneria e tecnica", /\b(ingegner|meccanic|elettronic|cad|autocad|solidworks|matlab|impiant|produzion|energia|edil)\b/gi, ["Un progetto tecnico spiegato in 2 minuti", "Software tecnici usati", "Sicurezza e qualità"]],
+  ["Vendite e business development", /\b(vendit|commercial|clienti|negozi|sales|crm|retail|business)\b/gi, ["Come gestisci un cliente difficile", "Un obiettivo di vendita raggiunto", "Uso di un CRM"]],
+  ["Risorse umane e organizzazione", /\b(risorse umane|hr|recruit|selezione|psicolog|formazion|organizzaz)\b/gi, ["Il processo di selezione", "Strumenti per l'onboarding", "Come dai un feedback"]],
+  ["Legale", /\b(giurisprudenz|legal|diritto|avvocat|contratt|privacy|gdpr|notai)\b/gi, ["Un caso pratico di contratto", "Privacy e GDPR in azienda", "Come spieghi una norma in modo semplice"]],
+  ["Scienze e sanità", /\b(biolog|chimic|medicin|farmac|infermier|laborator|sanit|biotec|fisica)\b/gi, ["Le tecniche di laboratorio che conosci", "Un progetto di ricerca", "Precisione e protocolli"]],
+];
+const TOOLS = ["Excel","Google Sheets","Power BI","Tableau","SQL","Python","R","Java","JavaScript","React","HTML","CSS","Git","GitHub","Canva","Figma","Photoshop","Illustrator","Premiere","AutoCAD","SolidWorks","MATLAB","SAP","Salesforce","HubSpot","Google Analytics","Meta Ads","Google Ads","WordPress","Notion","Word","PowerPoint","ChatGPT"];
+const LANGS = [["inglese","Inglese"],["spagnolo","Spagnolo"],["francese","Francese"],["tedesco","Tedesco"],["cinese","Cinese"],["arabo","Arabo"],["portoghese","Portoghese"],["russo","Russo"]];
+const SKILLWORDS = [[/analisi (dei )?dati|data analysis/i,"Analisi dei dati"],[/social|instagram|tiktok/i,"Gestione dei social media"],[/campagn|ads/i,"Campagne pubblicitarie online"],[/sito|web/i,"Sviluppo o gestione siti web"],[/progett/i,"Gestione di progetti"],[/present|pitch/i,"Presentare risultati"],[/report|dashboard/i,"Reportistica"],[/clienti|vendit/i,"Relazione con i clienti"],[/contabil|bilanci/i,"Contabilità di base"],[/ricerca|laborator/i,"Metodo di ricerca"],[/grafic|design/i,"Progettazione grafica"],[/video|foto/i,"Produzione di contenuti visivi"],[/programm|codice|sviluppat/i,"Programmazione"]];
+const esc = (s) => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cap = (s) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+
+function extractName(t) {
+  t = (t || "").trim();
+  const m = t.match(/(?:mi chiamo|sono|il mio nome è|nome[:\s]+)\s*([A-Za-zÀ-ÿ']+(?:\s+[A-ZÀ-Ý][a-zà-ÿ']+)?)/i);
+  let n = m ? m[1] : t.split(/[\s,.!]+/).filter(Boolean).slice(0, 2).join(" ");
+  n = n.split(/\s+/).map(cap).join(" ");
+  return n.length > 40 ? "" : n;
+}
+function keywordScheda(ans) {
+  const all = ans.join(" \n ");
+  let best = ["Altro", 0, ["Raccontare un progetto in 2 minuti", "Gli strumenti che usi", "Cosa vuoi imparare in azienda"]];
+  for (const [name, re, temi] of CATS) { const n = (all.match(re) || []).length; if (n > best[1]) best = [name, n, temi]; }
+  const strumenti = TOOLS.filter(t => new RegExp("(^|[^a-z])" + t.replace(/[.+]/g, "\\$&") + "([^a-z]|$)", "i").test(all));
+  const lingue = LANGS.filter(([k]) => all.toLowerCase().includes(k)).map(([k, L]) => { const lv = all.match(new RegExp(k + "[^,.;]*?\\b([ABC][12])\\b", "i")); return L + (lv ? " " + lv[1].toUpperCase() : ""); });
+  const comp = SKILLWORDS.filter(([re]) => re.test(all)).map(([, s]) => s);
+  return {
+    nome: extractName(ans[0] || ""),
+    studi: (ans[1] || "").slice(0, 180),
+    esperienze: [ans[2], ans[3]].filter(a => a && a.length > 3).map(a => a.slice(0, 200)),
+    categoria: best[0],
+    competenze: [...new Set([...comp, ...lingue.map(l => "Lingua: " + l)])].slice(0, 10),
+    strumenti,
+    temi: [...best[2], ans[6] ? "Racconta con numeri il risultato di cui sei fiero" : "Prepara un esempio concreto con un risultato", ans[7] ? "Perché vuoi il ruolo: " + ans[7].slice(0, 70) : "Che ruolo cerchi e perché"],
+  };
+}
+function mergeScheda(ai, kw) {
+  if (!ai) return kw;
+  const pick = (a, b) => (Array.isArray(a) ? (a.length ? a : b) : (a && String(a).trim() ? a : b));
+  return { nome: pick(ai.nome, kw.nome), studi: pick(ai.studi, kw.studi), esperienze: pick(ai.esperienze, kw.esperienze), categoria: pick(ai.categoria, kw.categoria), competenze: pick(ai.competenze, kw.competenze), strumenti: pick(ai.strumenti, kw.strumenti), temi: pick(ai.temi, kw.temi) };
+}
+
+// ---------- avatar: TalkingHead 3D, con riserva SVG ----------
+let head = null, svgMode = false;
+async function initAvatar() {
+  try {
+    const t = new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 15000));
+    const load = (async () => {
+      const { TalkingHead } = await import("./vendor/talkinghead.mjs");
+      const h = new TalkingHead($("avatar3d"), { lipsyncModules: [], cameraView: "upper", cameraRotateEnable: false, avatarMood: "happy", modelFPS: 30 });
+      await h.showAvatar({ url: "./vendor/brunette.glb", body: "F", avatarMood: "happy", lipsyncLang: "en" });
+      return h;
+    })();
+    head = await Promise.race([load, t]);
+    window.__avatar = "3d";
+  } catch (e) {
+    console.warn("Avatar 3D non disponibile, uso SVG:", e);
+    svgMode = true; window.__avatar = "svg";
+    $("avatar3d").hidden = true; $("avatarSvg").hidden = false;
+    blinkLoop();
+  }
+}
+function blinkLoop() { setInterval(() => { ["eyeL","eyeR"].forEach(i => $(i).setAttribute("ry", 2)); setTimeout(() => ["eyeL","eyeR"].forEach(i => $(i).setAttribute("ry", 15)), 140); }, 3600); }
+
+// viseme dalle lettere (l'italiano si legge come si scrive)
+const V = { a:"aa", à:"aa", e:"E", è:"E", é:"E", i:"I", ì:"I", o:"O", ò:"O", u:"U", ù:"U", p:"PP", b:"PP", m:"PP", f:"FF", v:"FF", t:"DD", d:"DD", n:"nn", l:"nn", s:"SS", z:"SS", c:"kk", g:"kk", k:"kk", q:"kk", r:"RR", h:null };
+const VISEMES = ["aa","E","I","O","U","PP","FF","DD","nn","SS","kk","RR","CH","TH"];
+let mouthRAF = null;
+function startMouth(text, getPos) {
+  stopMouth();
+  const tick = () => {
+    const i = Math.max(0, Math.floor(getPos()));
+    const ch = (text[i] || " ").toLowerCase();
+    const vis = V[ch];
+    const vowel = "aeiouàèéìòù".includes(ch);
+    if (head) {
+      for (const v of VISEMES) head.setValue("viseme_" + v, (v === vis) ? (vis === "PP" || vis === "FF" ? .9 : vowel ? .75 : .45) : 0, 80);
+    } else if (svgMode) {
+      const open = vis ? (vowel ? 22 + Math.random() * 8 : vis === "PP" ? 2 : 9) : 3;
+      $("mouth").setAttribute("ry", open); $("mouth").setAttribute("rx", ch === "o" || ch === "u" ? 24 : 34);
+    }
+    mouthRAF = requestAnimationFrame(tick);
+  };
+  tick();
+}
+function stopMouth() {
+  if (mouthRAF) cancelAnimationFrame(mouthRAF); mouthRAF = null;
+  if (head) for (const v of VISEMES) head.setValue("viseme_" + v, 0, 120);
+  if (svgMode) { $("mouth").setAttribute("ry", 4); $("mouth").setAttribute("rx", 34); }
+}
+
+// ---------- voce ----------
+let itVoice = null;
+function pickVoice() { const vs = speechSynthesis.getVoices(); itVoice = vs.find(v => /it[-_]IT/i.test(v.lang) && /google|elsa|alice|female|donna/i.test(v.name)) || vs.find(v => /^it/i.test(v.lang)) || null; }
+if ("speechSynthesis" in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function setState(cls, txt) { const s = $("state"); s.className = "state " + cls; s.textContent = txt; }
+
+function speak(text) {
+  return new Promise((resolve) => {
+    $("subtitle").textContent = text;
+    setState("speak", "Sta parlando");
+    const CPS = 14; // caratteri al secondo (stima)
+    let base = 0, baseT = performance.now();
+    const getPos = () => base + (performance.now() - baseT) / 1000 * CPS;
+    const finish = () => { stopMouth(); setState("", "Tocca a te"); resolve(); };
+    const canTTS = $("voiceOn").checked && "speechSynthesis" in window && (itVoice || speechSynthesis.getVoices().length);
+    if (!canTTS) { // nessuna voce: la bocca si muove comunque, il testo resta
+      startMouth(text, getPos);
+      setTimeout(finish, Math.min(9000, 600 + text.length / CPS * 1000));
+      return;
+    }
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "it-IT"; if (itVoice) u.voice = itVoice; u.rate = 1.02; u.pitch = 1.05;
+    let started = false;
+    u.onstart = () => { started = true; base = 0; baseT = performance.now(); startMouth(text, getPos); };
+    u.onboundary = (e) => { base = e.charIndex; baseT = performance.now(); };
+    u.onend = finish; u.onerror = finish;
+    speechSynthesis.speak(u);
+    // sicurezza: se la voce non parte entro 2 s, continuiamo senza
+    setTimeout(() => { if (!started) { speechSynthesis.cancel(); startMouth(text, getPos); setTimeout(finish, Math.min(9000, text.length / CPS * 1000)); } }, 2000);
+  });
+}
+
+// riconoscimento vocale (Chrome / Edge)
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec = null, listening = false;
+if (!SR) { $("micBtn").hidden = true; }
+function listen() {
+  if (!SR || state.busy || state.done) return;
+  if (listening) { rec && rec.stop(); return; }
+  speechSynthesis && speechSynthesis.cancel();
+  rec = new SR(); rec.lang = "it-IT"; rec.interimResults = true; rec.maxAlternatives = 1;
+  let finalTxt = "";
+  rec.onstart = () => { listening = true; $("micBtn").classList.add("on"); $("micBtn").innerHTML = "■<span class='lbl'> Stop</span>"; setState("listen", "Ti ascolto"); };
+  rec.onresult = (e) => { let t = ""; for (const r of e.results) { t += r[0].transcript; if (r.isFinal) finalTxt = t; } $("txt").value = t; };
+  rec.onerror = () => {};
+  rec.onend = () => { listening = false; $("micBtn").classList.remove("on"); $("micBtn").innerHTML = "🎤<span class='lbl'> Parla</span>"; setState("", "Tocca a te"); const v = $("txt").value.trim(); if (v) send(v); };
+  rec.start();
+}
+
+// ---------- chat ----------
+function addMsg(who, text) {
+  const d = document.createElement("div"); d.className = "msg " + (who === "ai" ? "ai" : "me");
+  d.innerHTML = `<span class="who">${who === "ai" ? "Avatar Facti" : "Tu"}</span>${esc(text)}`;
+  $("log").appendChild(d); $("log").scrollTop = $("log").scrollHeight;
+}
+function updateSteps() {
+  const n = Math.min(state.answers.length + 1, 8);
+  $("stepsBar").style.width = (state.done ? 100 : (state.answers.length / 8) * 100) + "%";
+  $("stepsTxt").textContent = state.done ? "Colloquio finito" : `Domanda ${n} di circa 8`;
+}
+function setMode(m) { state.mode = m; const t = $("modeTag"); t.textContent = m === "ai" ? "Modalità AI (Gemini)" : "Modalità demo · domande fisse"; t.classList.toggle("demo", m !== "ai"); window.__mode = m; }
+
+async function askAI() {
+  const ctrl = new AbortController(); const to = setTimeout(() => ctrl.abort(), AI_TIMEOUT_MS);
+  try {
+    const r = await fetch(PROXY_URL.replace(/\/$/, "") + "/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ messages: state.history }), signal: ctrl.signal });
+    if (!r.ok) throw new Error("http " + r.status);
+    const d = await r.json(); if (!d.say) throw new Error("vuoto"); return d;
+  } finally { clearTimeout(to); }
+}
+function scriptedNext(lastUser) {
+  if (lastUser && OFFTOPIC.test(lastUser) && state.step > 0) {
+    state.answers.pop();
+    return { say: "Qui faccio solo il colloquio sulle hard skill. Torniamo a noi: " + QUESTIONS[state.step - 1](extractName(state.answers[0])).replace(/^[^!.?]*[!.] /, ""), done: false };
+  }
+  if (state.step >= QUESTIONS.length) return { say: CLOSING, done: true };
+  const q = QUESTIONS[state.step](extractName(state.answers[0] || "")); state.step++;
+  return { say: q, done: false };
+}
+async function avatarTurn(lastUser) {
+  state.busy = true; $("sendBtn").disabled = true; setState("think", "Sta pensando");
+  let d = null;
+  if (state.mode === "ai") {
+    try { d = await askAI(); }
+    catch (e) {
+      console.warn("AI non disponibile, passo alla modalità demo:", e.message);
+      setMode("demo"); state.step = Math.min(state.answers.length, QUESTIONS.length);
+    }
+  }
+  if (!d) d = scriptedNext(lastUser);
+  state.history.push({ role: "model", text: d.say });
+  addMsg("ai", d.say);
+  if (d.done) { state.done = true; state.scheda = d.scheda || null; }
+  updateSteps();
+  await speak(d.say);
+  state.busy = false; $("sendBtn").disabled = false;
+  if (state.done) setTimeout(finishInterview, 600); else $("txt").focus();
+}
+async function send(text) {
+  text = (text || "").trim().slice(0, 1200); if (!text || state.busy || state.done) return;
+  $("txt").value = "";
+  addMsg("me", text); state.history.push({ role: "user", text }); state.answers.push(text);
+  updateSteps();
+  await avatarTurn(text);
+}
+
+// ---------- scheda e PDF ----------
+let finalScheda = null;
+function finishInterview() {
+  speechSynthesis && speechSynthesis.cancel(); stopMouth();
+  finalScheda = mergeScheda(state.scheda, keywordScheda(state.answers));
+  const s = finalScheda, li = (a) => (a && a.length ? a.map(x => `<li>${esc(x)}</li>`).join("") : "<li>—</li>");
+  $("scheda").innerHTML = `
+    <div class="grid2"><div><h3 style="margin-top:0">Nome</h3><p>${esc(s.nome || "—")}</p><h3>Studi</h3><p>${esc(s.studi || "—")}</p></div>
+    <div><h3 style="margin-top:0">Categoria di hard skill</h3><span class="cat">${esc(s.categoria)}</span><p class="note" style="margin-top:8px">Catalogazione, non è un voto.</p></div></div>
+    <h3>Esperienze</h3><ul class="clean">${li(s.esperienze)}</ul>
+    <h3>Hard skill</h3><ul class="chips">${li(s.competenze)}</ul>
+    <h3>Strumenti</h3><ul class="chips">${li(s.strumenti)}</ul>
+    <h3>Da preparare per il colloquio umano</h3><ul class="chips t">${li(s.temi)}</ul>
+    <p class="note" style="margin-top:16px">Creata in modalità ${state.mode === "ai" ? "AI (Gemini)" : "demo (domande fisse e parole chiave)"} · ${new Date().toLocaleString("it-IT")}</p>`;
+  show("s-result");
+}
+function buildPdf() {
+  const s = finalScheda; if (!s) return;
+  if (!window.jspdf) { window.print(); return; }
+  const { jsPDF } = window.jspdf; const doc = new jsPDF({ unit: "mm", format: "a4" });
+  const W = 210, M = 18; let y = 0;
+  const clean = (t) => String(t || "—").replace(/[^\x20-\x7E\u00A0-\u00FF€]/g, "");
+  doc.setFillColor(26, 29, 86); doc.rect(0, 0, W, 38, "F");
+  doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.text("SCHEDA HARD SKILL", M, 18);
+  doc.setFontSize(11); doc.setFont("helvetica", "normal"); doc.text("Facti, non parole · colloquio con l'avatar AI", M, 27);
+  doc.setFillColor(240, 241, 0); doc.rect(M, 31, 60, 2.2, "F");
+  y = 48; doc.setTextColor(17);
+  const section = (title) => { if (y > 262) { doc.addPage(); y = 20; } doc.setFillColor(0, 243, 243); doc.rect(M, y - 4.5, 3, 6, "F"); doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.text(title.toUpperCase(), M + 5, y); y += 7; doc.setFont("helvetica", "normal"); doc.setFontSize(11); };
+  const para = (t) => { const lines = doc.splitTextToSize(clean(t), W - 2 * M); for (const l of lines) { if (y > 280) { doc.addPage(); y = 20; } doc.text(l, M, y); y += 5.6; } y += 2.5; };
+  const list = (a) => { if (!a || !a.length) { para("—"); return; } for (const x of a) { const lines = doc.splitTextToSize(clean(x), W - 2 * M - 6); lines.forEach((l, i) => { if (y > 280) { doc.addPage(); y = 20; } doc.text((i ? "   " : "-  ") + l, M + 1, y); y += 5.6; }); } y += 2.5; };
+  section("Nome"); para(s.nome);
+  section("Studi"); para(s.studi);
+  section("Categoria di hard skill");
+  doc.setFillColor(240, 241, 0); doc.setFont("helvetica", "bold"); doc.setFontSize(14); const cw = doc.getTextWidth(clean(s.categoria).toUpperCase()) + 8; doc.rect(M, y - 6, cw, 9, "F"); doc.text(clean(s.categoria).toUpperCase(), M + 4, y); y += 10; doc.setFont("helvetica", "normal"); doc.setFontSize(11);
+  section("Esperienze"); list(s.esperienze);
+  section("Hard skill"); list(s.competenze);
+  section("Strumenti"); para((s.strumenti || []).join(", ") || "—");
+  section("Da preparare per il colloquio umano"); list(s.temi);
+  if (y > 255) { doc.addPage(); y = 20; }
+  doc.setFillColor(240, 241, 0); doc.rect(M, y, W - 2 * M, 12, "F"); doc.setFont("helvetica", "bold"); doc.text("Nessun voto, nessuna promessa di assunzione.", M + 4, y + 7.8); y += 20;
+  doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); doc.setTextColor(90);
+  doc.text(doc.splitTextToSize(`Simulazione · progetto hackathon H-ACK H-FARM College × Factanza (Team 19), non è un prodotto ufficiale Factanza. Modalità: ${state.mode === "ai" ? "AI (Gemini)" : "demo"}. Creata il ${new Date().toLocaleString("it-IT")}.`.replace("×", "x"), W - 2 * M), M, 287);
+  const fname = "scheda-hard-skill-" + (clean(s.nome).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "candidato") + ".pdf";
+  window.__pdfBytes = doc.output("arraybuffer").byteLength;
+  doc.save(fname);
+}
+
+// ---------- avvio ----------
+setMode(state.mode);
+const avatarReady = initAvatar();
+$("startBtn").onclick = async () => {
+  show("s-talk");
+  if ("speechSynthesis" in window) { const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } // sblocca l'audio
+  setState("think", "Si prepara");
+  await Promise.race([avatarReady, new Promise(r => setTimeout(r, 6000))]);
+  await avatarTurn("");
+};
+$("form").onsubmit = (e) => { e.preventDefault(); send($("txt").value); };
+$("micBtn").onclick = listen;
+$("endBtn").onclick = () => { if (state.answers.length === 0) return; finishInterview(); };
+$("pdfBtn").onclick = buildPdf;
+$("againBtn").onclick = () => location.reload();
+</script>
+</body>
+</html>
