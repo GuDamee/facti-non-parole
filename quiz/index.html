@@ -1,1 +1,402 @@
-<p>In arrivo</p>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Facti non parole · Quiz di teoria (demo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F1F1F1; --ink:#111; --cyan:#00F3F3; --yellow:#F0F100; --orange:#FF8828; --pink:#FF4BCD; --navy:#1A1D56;
+  --ok:#0B7A3B; --ko:#B3261E; --card:#fff;
+  --fs:21px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{font-size:var(--fs)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Archivo,"Helvetica Neue",Arial,system-ui,sans-serif;line-height:1.5;letter-spacing:.01em}
+h1,h2,h3,.head{font-family:"Archivo Black","Arial Black",Impact,system-ui,sans-serif;text-transform:uppercase;line-height:1.1;margin:0 0 .6em;letter-spacing:.01em}
+h1{font-size:2.6rem} h2{font-size:1.8rem} h3{font-size:1.2rem}
+p{margin:0 0 .8em}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 48px 48px}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:24px}
+header.top .brand{font-family:"Archivo Black","Arial Black",sans-serif;text-transform:uppercase;font-size:1rem}
+.progress{flex:1;max-width:520px;height:14px;background:#ddd;border-radius:8px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--navy);width:0;transition:width .3s}
+.steptag{font-weight:800;font-size:.9rem;white-space:nowrap}
+.bar{display:inline;padding:.05em .3em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.c{background:var(--cyan)} .y{background:var(--yellow)} .o{background:var(--orange)} .p{background:var(--pink)}
+.screen{display:none} .screen.on{display:block;animation:fade .25s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.navy{background:var(--navy);color:#fff;border-radius:18px;padding:44px 52px}
+.navy .bar{color:#111}
+.card{background:var(--card);border-radius:16px;padding:28px 32px;margin-bottom:22px;box-shadow:0 1px 0 #0001}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.grid-q{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:30px;align-items:start}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0;list-style:none;padding:0}
+.strip li{border:3px solid #fff6;border-radius:12px;padding:16px 14px;font-weight:800;font-size:1rem;text-align:center;color:#fffc}
+.strip li small{display:block;font-weight:400;font-size:.8rem;margin-top:4px}
+.strip li.now{background:var(--yellow);color:#111;border-color:var(--yellow)}
+.pill{display:inline-block;background:var(--cyan);color:#111;font-weight:800;border-radius:999px;padding:.3em .9em;margin:.2em 0}
+.note{font-size:.9rem;opacity:.9}
+button,.btn{font:inherit;font-weight:800;font-size:1.05rem;border:0;border-radius:12px;padding:18px 32px;min-height:60px;cursor:pointer;background:var(--ink);color:#fff;text-transform:uppercase;letter-spacing:.03em}
+button:focus-visible{outline:4px solid var(--orange);outline-offset:3px}
+button.big{background:var(--yellow);color:#111;font-size:1.25rem;padding:22px 44px}
+button.ghost{background:transparent;color:inherit;border:3px solid currentColor}
+button[disabled]{opacity:.35;cursor:not-allowed}
+.actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{text-align:left;padding:12px 12px;border-bottom:2px solid #e3e3e3;vertical-align:top}
+th{font-family:"Archivo Black","Arial Black",sans-serif;text-transform:uppercase;font-size:.8rem;background:#fafafa}
+.kicker{font-weight:800;text-transform:uppercase;font-size:.85rem;letter-spacing:.06em;margin-bottom:.4em}
+.qnum{font-family:"Archivo Black","Arial Black",sans-serif;font-size:1rem}
+.opts{display:grid;gap:12px}
+.opt{display:block;width:100%;text-align:left;text-transform:none;letter-spacing:0;font-weight:600;background:#fff;color:#111;border:3px solid #111;padding:16px 20px;font-size:1rem;line-height:1.35}
+.opt:hover:not([disabled]){background:#fffbd0}
+.opt.sel{background:var(--yellow)}
+.opt.right{background:#d8f7e3;border-color:var(--ok)}
+.opt.wrong{background:#fde2df;border-color:var(--ko)}
+.opt[disabled]{opacity:1;cursor:default}
+.numrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+input[type=text]{font:inherit;font-size:1.4rem;font-weight:800;width:220px;padding:14px 16px;border:3px solid #111;border-radius:12px;background:#fff}
+.unit{font-weight:800;font-size:1.3rem}
+textarea{font:inherit;width:100%;min-height:150px;padding:16px;border:3px solid #111;border-radius:12px;font-size:1rem}
+.fb{margin-top:20px;border-radius:12px;padding:18px 22px;display:none;font-size:1rem}
+.fb.on{display:block}
+.fb.good{background:#d8f7e3;border-left:8px solid var(--ok)}
+.fb.mid{background:#fff4cc;border-left:8px solid var(--orange)}
+.fb.bad{background:#fde2df;border-left:8px solid var(--ko)}
+.fb b.t{font-family:"Archivo Black","Arial Black",sans-serif;text-transform:uppercase;display:block;margin-bottom:6px}
+.calc{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;background:#fff8;padding:2px 6px;border-radius:6px}
+.order-list{display:grid;gap:12px}
+.oitem{display:flex;gap:14px;align-items:center;text-align:left;text-transform:none;letter-spacing:0;font-weight:600;background:#fff;color:#111;border:3px solid #111;padding:14px 18px;font-size:1rem;width:100%}
+.oitem .n{flex:0 0 46px;height:46px;border-radius:50%;border:3px dashed #999;display:flex;align-items:center;justify-content:center;font-family:"Archivo Black","Arial Black",sans-serif;font-size:1.1rem}
+.oitem.picked{background:var(--cyan)}
+.oitem.picked .n{border:3px solid #111;background:#111;color:#fff}
+.oitem.right{background:#d8f7e3;border-color:var(--ok)} .oitem.wrong{background:#fde2df;border-color:var(--ko)}
+.wc{font-weight:800;margin-top:8px}
+.wc.over{color:var(--ko)}
+.scores{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:24px 0}
+.score{background:#fff;color:#111;border-radius:16px;padding:22px 24px}
+.score .v{font-family:"Archivo Black","Arial Black",sans-serif;font-size:3rem;line-height:1}
+.score .l{font-weight:800;text-transform:uppercase;font-size:.85rem;margin-bottom:6px}
+.score .m{font-size:.85rem;margin-top:6px}
+.verdict{font-family:"Archivo Black","Arial Black",sans-serif;text-transform:uppercase;font-size:1.6rem;display:inline-block;padding:.2em .5em;border-radius:8px}
+.verdict.pass{background:var(--cyan);color:#111} .verdict.fail{background:var(--orange);color:#111}
+ul.clean{margin:0;padding-left:1.2em} ul.clean li{margin-bottom:.4em}
+details{background:#fff;border-radius:16px;padding:6px 28px;margin-bottom:18px}
+details summary{cursor:pointer;font-family:"Archivo Black","Arial Black",sans-serif;text-transform:uppercase;font-size:1.15rem;padding:20px 0;min-height:60px;list-style-position:outside}
+details[open]{padding-bottom:24px}
+.reminder{background:var(--yellow);border-radius:16px;padding:22px 28px;font-weight:800;font-size:1.1rem;margin:22px 0}
+.breakdown td:last-child,.breakdown th:last-child{text-align:right;white-space:nowrap}
+.tag{font-size:.75rem;font-weight:800;background:#111;color:#fff;border-radius:6px;padding:2px 8px;vertical-align:middle}
+@media (min-width:1360px) and (min-height:820px){:root{--fs:23px}}
+@media (max-width:1100px){:root{--fs:19px}.wrap{padding:22px 28px 40px}}
+@media (max-width:820px){
+  :root{--fs:17px}
+  h1{font-size:1.9rem} h2{font-size:1.4rem}
+  .wrap{padding:16px 16px 36px}
+  .grid2,.grid-q,.scores{grid-template-columns:1fr}
+  .strip{grid-template-columns:1fr 1fr}
+  .navy{padding:26px 20px}
+  .card{padding:20px 18px}
+  details{padding:4px 18px}
+  .progress{max-width:none}
+  header.top .brand{display:none}
+  table{font-size:.9rem} th,td{padding:10px 8px}
+  button,.btn{width:100%}
+  .numrow button{width:auto;flex:1}
+  input[type=text]{width:160px}
+}
+</style>
+<style>
+.opts.two{grid-template-columns:1fr 1fr;gap:16px}
+.opts.two .opt{min-height:110px;font-size:1.02rem}
+.qtitle{text-transform:none;font-family:Archivo,Arial,sans-serif;font-weight:800;font-size:1.6rem;line-height:1.3;max-width:1100px}
+.company{background:var(--cyan);border-radius:16px;padding:22px 28px;font-weight:800;font-size:1.1rem;margin:22px 0}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+.split div{border-radius:12px;padding:16px 20px;font-weight:800}
+.areas{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.area .sc{font-family:"Archivo Black","Arial Black",sans-serif;font-size:1.6rem}
+@media (max-width:820px){.opts.two,.split,.areas{grid-template-columns:1fr}.opts.two .opt{min-height:0}.qtitle{font-size:1.3rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top" id="topbar" hidden>
+    <div class="brand">Facti non parole · Quiz di teoria</div>
+    <div class="progress" aria-hidden="true"><span id="prog"></span></div>
+    <div class="steptag" id="steptag"></div>
+  </header>
+
+  <section class="screen on" id="s-intro">
+    <div class="navy">
+      <h1>Facti non parole <span class="bar y">· Quiz di teoria</span> (demo)</h1>
+      <p class="kicker" style="color:var(--cyan)">Quiz finale di teoria · prima della pratica</p>
+      <p style="font-size:1.1rem;max-width:1000px">Un percorso di 3-6 mesi per passare dall'università al primo lavoro.</p>
+      <ol class="strip" aria-label="Il percorso">
+        <li>1 · Avatar cataloga<small>5 € · nessun voto · poi decidono le persone</small></li>
+        <li style="background:#fff;color:#111;border-color:#fff">2 · 24 h online<small>Factanza · finisce con questo quiz · sei qui</small></li>
+        <li>3 · 36+ h in azienda<small>progetto con un tutor</small></li>
+        <li class="now">4 · Prova finale in presenza<small>in gruppo · conferma l'azienda</small></li>
+      </ol>
+    </div>
+    <div class="grid2" style="margin-top:22px">
+      <div class="card" style="border:4px solid var(--navy)">
+        <h3>La prova finale <span class="bar y">in presenza</span></h3>
+        <p class="kicker">PROPOSTA</p>
+        <ul class="clean">
+          <li><b>Gruppi di 3-4 studenti</b> su un problema reale dell'azienda.</li>
+          <li><b>Mezza giornata o una giornata</b>, in azienda.</li>
+          <li><b>I tutor aziendali osservano</b> con una griglia: comunicazione, lavoro in gruppo, obiezioni, tempi.</li>
+          <li><b>Pitch di 5 minuti</b> del gruppo, poi domande del tutor a ciascuno.</li>
+          <li><b>Feedback scritto</b> dell'azienda nel portfolio.</li>
+          <li><b>Conferma l'azienda</b>, non Factanza.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>E questo quiz?</h3>
+        <p>È il <span class="bar c">cancello della teoria</span>: chiude il corso online e viene prima della pratica.</p>
+        <p>Se lo superi, sei pronto per la pratica in azienda.</p>
+        <p><b>Non è la valutazione finale.</b> Quella la fa l'azienda, in presenza.</p>
+        <p class="note">Demo: domande di esempio, PROPOSTA del team.</p>
+      </div>
+    </div>
+    <div class="actions"><button class="big" id="introNext">Avanti</button></div>
+  </section>
+
+  <section class="screen" id="s-course">
+    <h2>Il corso <span class="bar c">e l'esame</span></h2>
+    <div class="grid2">
+      <div class="card">
+        <h3>Corso online · 24 h</h3>
+        <p class="kicker">Moduli · PROPOSTA</p>
+        <ol class="clean">
+          <li>Comunicazione scritta e orale</li>
+          <li>Dare e ricevere feedback</li>
+          <li>Lavoro in team e conflitti</li>
+          <li>Gestire le obiezioni</li>
+          <li>Tempo e priorità</li>
+          <li>Presentare: il pitch</li>
+          <li>Personal brand e LinkedIn</li>
+          <li>Portfolio</li>
+          <li>Le prime settimane in azienda</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Come funziona l'esame</h3>
+        <ul class="clean">
+          <li><b>15 domande</b> sui moduli del corso.</li>
+          <li>Per ogni domanda, <b>una sola risposta giusta</b>.</li>
+          <li>Dopo ogni risposta vedi <b>perché</b> è giusta o no.</li>
+          <li>Soglia: <span class="bar y"><b>70%, cioè 11 su 15</b></span> (PROPOSTA).</li>
+          <li>Se non la superi, ripassi e <b>puoi ripeterlo</b>.</li>
+          <li><b>Non è la valutazione finale</b>: quella è la prova in presenza in azienda.</li>
+          <li><b>Nessuna promessa di assunzione.</b></li>
+        </ul>
+        <p class="note">Tempo: circa 5-6 minuti.</p>
+      </div>
+    </div>
+    <div class="actions"><button class="ghost" id="courseBack">Indietro</button><button class="big" id="startBtn">Continua</button></div>
+  </section>
+
+  <section class="screen" id="s-q"></section>
+  <section class="screen" id="s-result"></section>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var AREAS={
+ com:{n:'Comunicazione e presentazione',c:'c',good:'Vai dritto al punto e ascolti prima di rispondere.',bad:'Apri sempre con il messaggio principale. Davanti a un\u2019obiezione, prima fai una domanda.'},
+ team:{n:'Feedback e lavoro in team',c:'p',good:'Dai e ricevi feedback in modo concreto e rispettoso.',bad:'Feedback: in privato, con un fatto concreto e una proposta. Nei conflitti, torna all\u2019obiettivo comune.'},
+ org:{n:'Organizzazione e primi giorni',c:'y',good:'Sai scegliere le priorità e chiedere aiuto nel modo giusto.',bad:'Parti da ciò che è importante e urgente. Raccogli i dubbi e chiedi al tutor nel momento giusto.'},
+ brand:{n:'Personal brand',c:'o',good:'Sai raccontare cosa sai fare, con esempi veri.',bad:'Titolo LinkedIn: chi sei, cosa sai fare, cosa cerchi. Portfolio: pochi progetti, spiegati bene.'}
+};
+var Q=[
+ {a:'com',topic:'Comunicazione scritta',q:'Devi chiedere al tuo manager di approvare un budget. Quale apertura dell\u2019email è più chiara?',
+  o:['Buongiorno, volevo aggiornarla su varie cose successe questa settimana nel progetto.',
+     'Buongiorno, le chiedo di approvare entro venerdì il budget di prova del progetto. Sotto trova i 3 motivi.',
+     'Ciao!! Ti scrivo per una cosetta veloce \u{1F60A}',
+     'Buongiorno, come forse saprà, negli ultimi anni il mercato è cambiato molto.'],
+  r:1,e:['Non dice cosa serve. Il manager deve leggere tutto per capirlo.','','Tono troppo informale per un manager. E non dice cosa chiedi.','Parte da lontano. La richiesta arriva troppo tardi.'],
+  why:'Apri con la richiesta e la scadenza. Il manager capisce subito cosa deve fare. I dettagli vengono dopo.'},
+ {a:'team',topic:'Dare un feedback',q:'Un collega ha consegnato un report con degli errori. Come gli dai il feedback?',
+  o:['In riunione, davanti a tutti, così tutti imparano.',
+     'Non dici niente e correggi tu gli errori.',
+     'In privato: «Nella tabella 2 i totali non tornano. Il cliente potrebbe notarlo. Li ricontrolliamo insieme?»',
+     'Gli scrivi solo: «Il report non va bene.»'],
+  r:2,e:['Davanti a tutti mette a disagio. La persona si difende invece di ascoltare.','Il collega non impara e l\u2019errore si ripete.','','È vago: non dice cosa correggere né come.'],
+  why:'Un buon feedback è in privato e ha tre parti: il fatto concreto, l\u2019effetto, una proposta.'},
+ {a:'team',topic:'Ricevere un feedback',q:'Il tutor ti dice che la tua presentazione era troppo lunga. Cosa fai?',
+  o:['Ringrazi, chiedi un esempio concreto e proponi come accorciarla.',
+     'Spieghi subito perché era così lunga.',
+     'Annuisci e la prossima volta la fai uguale.',
+     'Chiedi a un collega se è d\u2019accordo con il tutor.'],
+  r:0,e:['','Giustificarsi chiude il dialogo. Prima ascolta.','Il feedback serve solo se cambi qualcosa.','Sposta il problema. La cosa utile è capire cosa migliorare.'],
+  why:'Davanti a un feedback: ascolta, chiedi un esempio, decidi una modifica concreta.'},
+ {a:'team',topic:'Lavoro in team e conflitti',q:'Due compagni di team non sono d\u2019accordo sulla direzione. Il lavoro è fermo. Cosa fai?',
+  o:['Scegli la tua idea e vai avanti da solo.',
+     'Aspetti che si mettano d\u2019accordo tra loro.',
+     'Proponi un breve incontro: ognuno spiega la sua idea, si torna all\u2019obiettivo comune e si sceglie come decidere.',
+     'Segnali subito il problema al manager, senza parlarne con loro.'],
+  r:2,e:['Il team si divide ancora di più.','Il lavoro resta fermo e il problema cresce.','','Prima si prova a risolvere nel team. Il manager serve se non funziona.'],
+  why:'Nei conflitti aiuta tornare all\u2019obiettivo comune e decidere insieme un criterio per scegliere.'},
+ {a:'com',topic:'Gestire un\u2019obiezione',q:'In riunione un manager dice: «Questa proposta costa troppo.» Come rispondi?',
+  o:['«Non è vero, costa il giusto.»',
+     'Cambi argomento e passi alla slide dopo.',
+     'Abbassi subito il prezzo.',
+     '«Capisco. Rispetto a cosa le sembra alta? Così le mostro i numeri giusti.»'],
+  r:3,e:['Contraddire senza ascoltare crea uno scontro.','L\u2019obiezione resta e il manager si fida meno.','Cedi senza capire il vero problema.',''],
+  why:'Davanti a un\u2019obiezione: ascolta, fai una domanda per capire, poi rispondi con i dati.'},
+ {a:'org',topic:'Tempo e priorità',q:'È lunedì. Hai: un report per il cliente da consegnare domani, email non urgenti, cartelle da riordinare. Da dove parti?',
+  o:['Dalle email: sono veloci.',
+     'Dal report per domani. Poi le email. Le cartelle quando hai tempo.',
+     'Dalle cartelle: così poi lavori meglio.',
+     'Un po\u2019 di tutto insieme.'],
+  r:1,e:['Le cose veloci ma poco importanti rubano il tempo a quelle importanti.','','Riordinare è utile ma non urgente.','Saltare da un compito all\u2019altro fa perdere tempo.'],
+  why:'Prima ciò che è importante e urgente. Poi il resto, in ordine di importanza.'},
+ {a:'com',topic:'Presentare',q:'Hai 5 minuti per presentare un progetto. Qual è la struttura migliore?',
+  o:['Problema \u2192 proposta \u2192 2-3 dati chiave \u2192 cosa chiedi (prossimo passo).',
+     'Storia dell\u2019azienda, poi tutti i dati, poi la conclusione se resta tempo.',
+     'Leggi le slide una per una.',
+     'Parti subito dalle domande del pubblico.'],
+  r:0,e:['','La conclusione rischia di saltare. E troppi dati confondono.','Il pubblico legge più veloce di te e smette di ascoltare.','Senza una struttura il messaggio si perde.'],
+  why:'In pochi minuti serve un filo chiaro: cosa non va, cosa proponi, perché funziona, cosa chiedi.'},
+ {a:'brand',topic:'Personal brand su LinkedIn',q:'Sei al primo lavoro. Quale titolo LinkedIn funziona meglio?',
+  o:['Studente',
+     'In cerca di opportunità',
+     'Laureando in Economia | Marketing e analisi dati | Cerco il primo ruolo in comunicazione',
+     'Guru del marketing \u{1F680} Visionario'],
+  r:2,e:['Troppo generico: non dice cosa sai fare.','Dice cosa vuoi, non cosa offri.','','Esagerato. Chi legge non si fida.'],
+  why:'Un buon titolo dice chi sei, cosa sai fare e cosa cerchi. Con parole che un recruiter cerca.'},
+ {a:'brand',topic:'Portfolio',q:'Cosa metti nel tuo portfolio?',
+  o:['Tutti i certificati dei corsi online che hai fatto.',
+     'Solo il CV in PDF.',
+     'Documenti riservati dell\u2019azienda, per mostrare esperienza.',
+     '2-3 progetti: il problema, cosa hai fatto tu, il risultato e il feedback ricevuto.'],
+  r:3,e:['Un elenco di certificati non mostra cosa sai fare.','Il CV dice cosa hai fatto, il portfolio lo mostra.','Mai: serve sempre l\u2019ok dell\u2019azienda.',''],
+  why:'Pochi progetti spiegati bene valgono più di tanti titoli. Per un caso reale serve l\u2019ok dell\u2019azienda.'},
+ {a:'org',topic:'Le prime settimane in azienda',q:'Prima settimana in azienda. Hai diversi dubbi su un compito. Cosa fai?',
+  o:['Non chiedi per non disturbare. Provi da solo e consegni.',
+     'Provi prima a capire da solo, scrivi le domande e le fai al tutor in un momento concordato.',
+     'Chiedi ogni dubbio appena arriva, anche interrompendo.',
+     'Aspetti la fine della settimana e chiedi tutto insieme.'],
+  r:1,e:['Rischi di sbagliare il compito e perdere tempo.','','Interrompere spesso rallenta il lavoro degli altri.','Troppo tardi: il compito nel frattempo va avanti.'],
+  why:'Chiedere è normale. Prima prova, poi raccogli le domande e chiedile nel momento giusto. Prendi appunti.'},
+ {a:'com',topic:'Ascolto attivo',q:'Un cliente ti spiega un problema in modo confuso. Cosa fai?',
+  o:['Lo interrompi e proponi subito una soluzione.',
+     'Mentre parla, pensi già a cosa rispondere.',
+     'Annuisci e dici «certo, capisco» a tutto.',
+     'Ascolti fino alla fine, poi riassumi: «Quindi il problema è… Ho capito bene?»'],
+  r:3,e:['Rischi di risolvere il problema sbagliato.','Così ascolti solo a metà.','Sembri d\u2019accordo, ma non verifichi di aver capito.',''],
+  why:'Ascolto attivo: lasci finire, riassumi con parole tue e chiedi conferma.'},
+ {a:'com',topic:'Email dopo una riunione',q:'Hai appena finito una riunione con un cliente. Cosa scrivi dopo?',
+  o:['Un\u2019email breve, in giornata: decisioni prese, chi fa cosa, entro quando.',
+     'Niente: c\u2019erano tutti.',
+     'La trascrizione completa di tutta la riunione.',
+     'Solo «Grazie per la riunione!».'],
+  r:0,e:['','Ognuno ricorda cose diverse. Senza un riepilogo nascono equivoci.','Troppo lunga: nessuno la legge.','Gentile, ma non fissa decisioni e compiti.'],
+  why:'Un buon follow-up è breve e fissa tre cose: cosa si è deciso, chi lo fa, entro quando.'},
+ {a:'org',topic:'Chiedere aiuto',q:'Sei bloccato su un compito da due giorni. La scadenza si avvicina. Cosa fai?',
+  o:['Aspetti ancora: prima o poi trovi la soluzione.',
+     'Lo dici al tutor solo il giorno della scadenza.',
+     'Lo dici subito al tutor: cosa hai provato, dove sei bloccato, cosa ti serve.',
+     'Passi il compito a un collega, senza dirlo a nessuno.'],
+  r:2,e:['Il tempo passa e il problema resta.','Troppo tardi: non c\u2019è più tempo per rimediare.','','Nessuno sa chi sta facendo cosa. Il problema si sposta.'],
+  why:'Chiedere aiuto presto è professionale. Arriva con cosa hai già provato e cosa ti serve.'},
+ {a:'brand',topic:'Networking su LinkedIn',q:'Vuoi scrivere su LinkedIn a una professionista che non conosci. Quale messaggio mandi?',
+  o:['«Ciao, mi trovi un lavoro?»',
+     '«Buongiorno, ho letto il suo post sul lancio del nuovo prodotto. Studio marketing e vorrei farle due domande sul suo lavoro. Avrebbe 15 minuti?»',
+     'Una richiesta di collegamento senza messaggio, poi il CV in allegato.',
+     'Un messaggio lungo con tutta la tua storia.'],
+  r:1,e:['Chiedi troppo a chi non ti conosce.','','Senza un messaggio non si capisce chi sei né cosa vuoi.','Troppo lungo: non lo legge.'],
+  why:'Un buon primo messaggio è breve, personale e fa una richiesta piccola e chiara.'},
+ {a:'org',topic:'Una scadenza che salta',q:'Ti accorgi che non riuscirai a consegnare in tempo. Cosa fai?',
+  o:['Consegni in tempo un lavoro incompleto, senza dirlo.',
+     'Non dici niente e consegni in ritardo.',
+     'Chiedi più tempo il giorno dopo la scadenza.',
+     'Avvisi appena lo sai: spieghi il motivo e proponi una nuova data o una consegna parziale.'],
+  r:3,e:['Chi lo riceve scopre il problema troppo tardi.','Gli altri non possono organizzarsi.','Troppo tardi: la scadenza è già saltata.',''],
+  why:'Avvisare presto, con una proposta, permette agli altri di organizzarsi. E mantiene la fiducia.'}
+];
+var PTS=1, ans=[], idx=0;
+function show(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('on')});$('#'+id).classList.add('on');window.scrollTo(0,0);}
+function prog(i,l){$('#topbar').hidden=false;$('#prog').style.width=Math.round(i/Q.length*100)+'%';$('#steptag').textContent=l;}
+$('#introNext').onclick=function(){prog(0,'Il corso');show('s-course');};
+$('#courseBack').onclick=function(){$('#topbar').hidden=true;show('s-intro');};
+$('#startBtn').onclick=function(){ans=[];idx=0;render();};
+
+function render(){
+  var q=Q[idx], A=AREAS[q.a];
+  prog(idx,'Domanda '+(idx+1)+'/'+Q.length);
+  $('#s-q').innerHTML='<div class="kicker"><span class="bar '+A.c+'">'+q.topic+'</span> · domanda '+(idx+1)+' di '+Q.length+'</div>'+
+   '<h2 class="qtitle">'+q.q+'</h2>'+
+   '<div class="opts two">'+q.o.map(function(t,i){return '<button class="opt" data-i="'+i+'">'+String.fromCharCode(65+i)+'. '+t+'</button>'}).join('')+'</div>'+
+   '<div class="fb" id="fb"></div>'+
+   '<div class="actions"><button class="big" id="nextBtn" hidden>'+(idx===Q.length-1?'Vedi il risultato':'Avanti')+'</button></div>';
+  show('s-q');
+  var btns=document.querySelectorAll('.opt');
+  btns.forEach(function(b){b.onclick=function(){
+    var i=+b.dataset.i, ok=i===q.r; ans[idx]=ok?PTS:0;
+    btns.forEach(function(x,j){x.disabled=true;if(j===q.r)x.classList.add('right');});
+    if(!ok)b.classList.add('wrong');
+    prog(idx+1,'Domanda '+(idx+1)+'/'+Q.length);
+    var fb=$('#fb'); fb.className='fb on '+(ok?'good':'bad');
+    fb.innerHTML='<b class="t">'+(ok?'Giusto':'Non è la migliore')+'</b>'+(ok?'':'<p>'+q.e[i]+' La risposta migliore è la '+String.fromCharCode(65+q.r)+'.</p>')+'<p style="margin:0">'+q.why+'</p>';
+    var n=$('#nextBtn'); n.hidden=false; n.focus({preventScroll:true}); fb.scrollIntoView({behavior:'smooth',block:'nearest'});
+    n.onclick=function(){ if(idx<Q.length-1){idx++;render();} else result(); };
+  };});
+}
+
+function result(){
+  prog(Q.length,'Risultato');
+  var tot=ans.reduce(function(a,b){return a+b},0), max=Q.length*PTS, pass=tot>=Math.ceil(max*0.7), pct=Math.round(tot/max*100);
+  var per={}; Q.forEach(function(q,i){per[q.a]=per[q.a]||{s:0,m:0};per[q.a].s+=ans[i];per[q.a].m+=PTS;});
+  var areas=Object.keys(AREAS).map(function(k){var A=AREAS[k],p=per[k],full=p.s===p.m;
+    return '<div class="card area"><p class="kicker"><span class="bar '+A.c+'">'+A.n+'</span></p><div class="sc">'+p.s+' / '+p.m+'</div><p style="margin:.4em 0 0">'+(full?A.good:A.bad)+'</p></div>';}).join('');
+  var rows=Q.map(function(q,i){return '<tr><td>'+(i+1)+'. '+q.topic+'</td><td>'+String.fromCharCode(65+q.r)+'</td><td><b>'+(ans[i]?'\u2714 giusta':'\u2718 sbagliata')+'</b></td></tr>'}).join('');
+  $('#s-result').innerHTML=
+  '<div class="navy">'+
+    '<h1>Il tuo <span class="bar y">risultato</span></h1>'+
+    '<div class="scores" style="grid-template-columns:minmax(0,320px) 1fr;align-items:center">'+
+      '<div class="score"><div class="l">Punteggio</div><div class="v">'+tot+'<small style="font-size:.4em"> / '+max+'</small></div><div class="m"><b>'+pct+'%</b> · soglia 11/15 (70%)</div></div>'+
+      '<div><p><span class="verdict '+(pass?'pass':'fail')+'">'+(pass?'Pronto per la pratica in azienda':'Non ancora')+'</span></p>'+
+      '<p style="font-size:1.05rem;margin:0">'+(pass?'Hai chiuso la teoria. Non è la valutazione finale: ora tocca alla pratica in azienda.':'Ripassa le aree qui sotto e rifai il quiz.')+'</p>'+
+      '<p class="note" style="margin-top:.6em">Soglia (PROPOSTA): 70%, cioè 11 risposte giuste su 15. Puoi ripetere il quiz.</p></div>'+
+    '</div>'+
+  '</div>'+
+  '<div class="company">La parte pratica la gestisce l\u2019azienda: progetto nelle 36+ ore e prova finale in presenza, valutati dal tutor aziendale. È l\u2019azienda a confermarla.</div>'+
+  '<div class="areas">'+areas+'</div>'+'<div class="card" style="border:4px solid var(--navy);margin-top:4px"><h2>Poi: la prova finale <span class="bar y">in presenza</span></h2>'+'<p class="kicker">PROPOSTA</p><ul class="clean">'+'<li><b>Gruppi di 3-4 studenti</b> su un problema reale dell\u2019azienda.</li>'+'<li><b>Mezza giornata o una giornata</b>, in azienda.</li>'+'<li><b>I tutor aziendali osservano</b> con una griglia: comunicazione, lavoro in gruppo, gestione delle obiezioni, rispetto dei tempi.</li>'+'<li><b>Pitch finale di 5 minuti</b> del gruppo, poi domande del tutor a ciascuno.</li>'+'<li><b>Feedback scritto dell\u2019azienda</b> nel portfolio.</li>'+'<li><b>Conferma l\u2019azienda, non Factanza.</b></li></ul></div>'+
+  '<div class="reminder">Nessuna promessa di assunzione. Lo studente paga la formazione, non un posto di lavoro.</div>'+
+  '<details><summary>Risposte domanda per domanda</summary><table class="breakdown"><tr><th>Domanda</th><th>Giusta</th><th>Esito</th></tr>'+rows+'</table></details>'+
+  '<details><summary>Come funziona tutto il percorso</summary>'+
+    '<p><b>Per chi:</b> studenti universitari che passano al primo lavoro. Durata 3-6 mesi.</p>'+
+    '<ol class="clean">'+
+      '<li><b>Ingresso · avatar AI (5 €).</b> Non dà un voto: individua e cataloga la tua categoria di hard skill. Poi un colloquio con una persona. Decidono le persone.</li>'+
+      '<li><b>Corso online Factanza (24 h).</b> Soft skill e personal brand a 360°. Si chiude con questo quiz di teoria: se lo superi, passi alla pratica.</li>'+
+      '<li><b>Pratica in azienda (almeno 36 h, il 60%).</b> Un progetto con un tutor aziendale, con feedback. Anche nelle PMI.</li>'+
+      '<li><b>Prova finale in presenza + portfolio.</b> In gruppo, in azienda. La prepara, la valuta e la conferma l\u2019azienda.</li>'+
+    '</ol>'+
+    '<p><b>Prezzo:</b> 5 € il colloquio + 200 € solo se sei ammesso. Le aziende pagano una quota di partnership.</p>'+
+    '<p><b>Regola:</b> paghi la formazione, non un posto di lavoro. Nessuna promessa di assunzione.</p>'+
+    '<p class="kicker" style="margin-top:1em">Il pilota (PROPOSTA)</p>'+
+    '<p>20 studenti · 1-2 aziende · 3 mesi.</p>'+
+    '<table><tr><th>Obiettivo</th><th>Valore</th></tr>'+
+      '<tr><td>Colloqui con l\u2019avatar pagati</td><td>60</td></tr>'+
+      '<tr><td>Ammessi dopo il colloquio umano</td><td>20</td></tr>'+
+      '<tr><td>Ammessi che pagano 200 €</td><td>almeno 15</td></tr>'+
+      '<tr><td>Studenti che finiscono il percorso</td><td>almeno l\u201980%</td></tr>'+
+      '<tr><td>Categoria AI confermata dal tutor</td><td>7 casi su 10</td></tr>'+
+    '</table></details>'+
+  '<div class="actions"><button class="big" id="restart">Rifai il quiz</button></div>'+
+  '<p class="note" style="margin-top:24px">Facti non parole · Team 19 · H-ACK H-FARM College × Factanza. Quiz di esempio. PROPOSTA del team.</p>';
+  show('s-result');
+  $('#restart').onclick=function(){$('#topbar').hidden=true;show('s-intro');};
+}
+})();
+</script>
+<footer style="text-align:center;font:14px Arial,sans-serif;color:#555;padding:24px 12px">Progetto hackathon H-ACK H-FARM College &times; Factanza (21-22 nov 2026) &middot; Team 19 &middot; Brief 3 &middot; Simulazione, non &egrave; un prodotto ufficiale Factanza.</footer></body>
+</html>
