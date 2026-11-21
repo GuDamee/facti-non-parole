@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Facti, non parole · Interview with the avatar (demo)</title>
+<title>Facti, non parole · Colloquio con l'avatar (demo)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
@@ -46,7 +46,7 @@ button.tipbtn{background:var(--cyan);color:#111}
 button.ghost{background:transparent;color:inherit;border:3px solid currentColor}
 button[disabled]{opacity:.35;cursor:not-allowed}
 .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px;align-items:center}
-/* interview */
+/* colloquio */
 .talk{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:26px;align-items:start}
 .stage{background:var(--navy);border-radius:18px;padding:18px;color:#fff;position:sticky;top:12px}
 #avatar{position:relative;width:100%;aspect-ratio:1/1;max-height:62vh;border-radius:14px;overflow:hidden;background:radial-gradient(circle at 50% 35%,#2b3080,#1A1D56 70%)}
@@ -72,7 +72,7 @@ html,body{overflow-x:hidden}
 #micBtn.on{background:var(--ko);color:#fff}
 .steps{height:12px;background:#ddd;border-radius:8px;overflow:hidden;margin:14px 0 4px}
 .steps span{display:block;height:100%;background:var(--navy);width:0;transition:width .3s}
-/* sheet */
+/* scheda */
 .scheda h3{margin-top:1em}
 .chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0}
 .chips li{background:var(--cyan);border-radius:999px;padding:.3em .9em;font-weight:800;font-size:.95rem}
@@ -100,54 +100,54 @@ footer{margin-top:30px;font-size:.75rem;opacity:.7}
 <div class="wrap">
   <header class="top">
     <div class="brand">Facti, non parole</div>
-    <div class="sim">Simulation · hackathon project, not an official Factanza product</div>
+    <div class="sim">Simulazione · progetto hackathon, non è un prodotto ufficiale Factanza</div>
   </header>
 
-  <!-- 1. WELCOME -->
+  <!-- 1. BENVENUTO -->
   <section class="screen on" id="s-intro">
     <div class="navy">
-      <h1>Welcome <span class="bar y">and thank you!</span></h1>
-      <p style="font-size:1.15rem">Thank you for signing up for the <b>entry interview</b>.<br>It is the first step of the path.</p>
+      <h1>Benvenuto <span class="bar y">e grazie!</span></h1>
+      <p style="font-size:1.15rem">Grazie per esserti iscritto al <b>colloquio d'ingresso</b>.<br>È il primo passo del percorso.</p>
       <ol class="strip">
-        <li class="now">1. Entry interview<small>with the AI avatar</small></li>
-        <li>2. Human interview<small>with Factanza</small></li>
-        <li>3. Online course<small>24 h soft skills</small></li>
-        <li>4. In the company<small>36+ h · final test</small></li>
+        <li class="now">1. Colloquio d'ingresso<small>con l'avatar AI</small></li>
+        <li>2. Colloquio umano<small>con Factanza</small></li>
+        <li>3. Corso online<small>24 h soft skill</small></li>
+        <li>4. In azienda<small>36+ h · prova finale</small></li>
       </ol>
     </div>
     <div class="grid2" style="margin-top:22px">
       <div class="card">
-        <h3>How to use it</h3>
+        <h3>Come si usa</h3>
         <ul class="clean">
-          <li>Find a <b>quiet place</b>.</li>
-          <li>Use <b>Chrome</b>.</li>
-          <li>When the browser asks, <b>allow the microphone</b>.</li>
-          <li>Talk naturally about your <b>studies, projects and jobs</b>.</li>
-          <li>Prefer typing? <b>You can type</b> your answers.</li>
-          <li>It takes about <b>10 minutes</b>.</li>
-          <li><span class="bar y"><b>There is no grade.</b></span></li>
+          <li>Mettiti in un <b>posto tranquillo</b>.</li>
+          <li>Usa <b>Chrome</b>.</li>
+          <li>Quando il browser lo chiede, <b>consenti il microfono</b>.</li>
+          <li>Parla in modo naturale: <b>studi, progetti, lavori</b>.</li>
+          <li>Preferisci scrivere? <b>Puoi scrivere</b> le risposte.</li>
+          <li>Dura circa <b>10 minuti</b>.</li>
+          <li><span class="bar y"><b>Non c'è nessun voto.</b></span></li>
         </ul>
       </div>
       <div class="card">
-        <h3>What to expect</h3>
+        <h3>Cosa ti aspetta</h3>
         <ul class="clean">
-          <li>The avatar asks you <b>a few questions</b>, one at a time.</li>
-          <li>It identifies your <b>hard-skill category</b>.</li>
-          <li>Need help? Ask for <b>tips for the human interview</b>.</li>
-          <li>At the end you get a <b>PDF with your hard-skill sheet</b>.</li>
-          <li>Next comes the <b>human interview</b>. This helps you prepare.</li>
-          <li><b>No promise of hiring.</b></li>
+          <li>L'avatar ti fa <b>alcune domande</b>, una alla volta.</li>
+          <li>Riconosce la tua <b>categoria di hard skill</b>.</li>
+          <li>Ti serve aiuto? Chiedi <b>consigli per il colloquio umano</b>.</li>
+          <li>Alla fine ricevi un <b>PDF con la scheda hard skill</b>.</li>
+          <li>Dopo c'è il <b>colloquio umano</b>. Questo ti aiuta a prepararti.</li>
+          <li><b>Nessuna promessa di assunzione.</b></li>
         </ul>
       </div>
     </div>
     <div class="actions">
-      <button class="big" id="startBtn">Start with the avatar</button>
-      <label style="font-weight:800"><input type="checkbox" id="voiceOn" checked style="width:22px;height:22px;vertical-align:middle"> Avatar with voice</label>
+      <button class="big" id="startBtn">Inizia con l'avatar</button>
+      <label style="font-weight:800"><input type="checkbox" id="voiceOn" checked style="width:22px;height:22px;vertical-align:middle"> Avatar con voce</label>
     </div>
-    <p class="note" style="margin-top:12px">Simulation · hackathon project, not an official Factanza product.</p>
+    <p class="note" style="margin-top:12px">Simulazione · progetto hackathon, non è un prodotto ufficiale Factanza.</p>
   </section>
 
-  <!-- 2. INTERVIEW -->
+  <!-- 2. COLLOQUIO -->
   <section class="screen" id="s-talk">
     <div class="talk">
       <div class="stage">
@@ -168,49 +168,49 @@ footer{margin-top:30px;font-size:.75rem;opacity:.7}
         </div>
         <div class="sub" id="subtitle"></div>
         <div class="status">
-          <span class="state" id="state">Ready</span>
-          <span class="mode" id="modeTag">AI mode</span>
+          <span class="state" id="state">Pronto</span>
+          <span class="mode" id="modeTag">Modalità AI</span>
         </div>
       </div>
       <div>
         <div class="log" id="log" aria-live="polite"></div>
         <div class="steps"><span id="stepsBar"></span></div>
-        <div class="note" id="stepsTxt">Question 1 of about 8</div>
+        <div class="note" id="stepsTxt">Domanda 1 di circa 8</div>
         <form class="inrow" id="form" autocomplete="off">
-          <button type="button" id="micBtn" title="Speak" aria-label="Speak">🎤<span class="lbl"> Speak</span></button>
-          <input id="txt" type="text" placeholder="Type your answer here…" aria-label="Answer">
-          <button type="submit" id="sendBtn" aria-label="Send">➤<span class="lbl"> Send</span></button>
+          <button type="button" id="micBtn" title="Parla" aria-label="Parla">🎤<span class="lbl"> Parla</span></button>
+          <input id="txt" type="text" placeholder="Scrivi qui la tua risposta…" aria-label="Risposta">
+          <button type="submit" id="sendBtn" aria-label="Invia">➤<span class="lbl"> Invia</span></button>
         </form>
         <div class="actions">
-          <button class="tipbtn" id="tipsBtn" type="button">💡 Tips for the human interview</button>
-          <button class="ghost" id="endBtn" type="button">Finish and create the sheet</button>
+          <button class="tipbtn" id="tipsBtn" type="button">💡 Consigli per il colloquio umano</button>
+          <button class="ghost" id="endBtn" type="button">Termina e crea la scheda</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3. SHEET -->
+  <!-- 3. SCHEDA -->
   <section class="screen" id="s-result">
-    <h2>Your <span class="bar c">hard-skill sheet</span></h2>
+    <h2>La tua <span class="bar c">scheda hard skill</span></h2>
     <div class="card scheda" id="scheda"></div>
-    <div class="reminder">No grade, no promise of hiring. The sheet is for the human interview.</div>
+    <div class="reminder">Nessun voto, nessuna promessa di assunzione. La scheda serve per il colloquio umano.</div>
     <div class="actions">
-      <button class="big" id="pdfBtn">Download the PDF</button>
-      <button class="ghost" id="againBtn">Restart the interview</button>
-      <a href="../quiz/" style="font-weight:800;color:inherit">Go to the theory quiz →</a>
+      <button class="big" id="pdfBtn">Scarica il PDF</button>
+      <button class="ghost" id="againBtn">Rifai il colloquio</button>
+      <a href="../quiz/" style="font-weight:800;color:inherit">Vai al quiz di teoria →</a>
     </div>
   </section>
 
-  <footer>Facti, non parole · Team 19 · H-ACK H-FARM College × Factanza, 21-22 November 2026 · Simulation, not an official Factanza product.
-  3D avatar: <a href="https://github.com/met4citizen/TalkingHead" style="color:inherit">TalkingHead</a> (MIT) · "brunette" model by Ready Player Me (CC BY-NC 4.0).</footer>
+  <footer>Facti, non parole · Team 19 · H-ACK H-FARM College × Factanza, 21-22 novembre 2026 · Simulazione, non è un prodotto ufficiale Factanza.
+  Avatar 3D: <a href="https://github.com/met4citizen/TalkingHead" style="color:inherit">TalkingHead</a> (MIT) · modello "brunette" di Ready Player Me (CC BY-NC 4.0).</footer>
 </div>
 
 <script type="module">
-// ================= CONFIGURATION =================
-// Cloudflare Worker URL (Gemini proxy). Empty = demo mode only, with fixed questions.
+// ================= CONFIGURAZIONE =================
+// URL del Worker Cloudflare (proxy Gemini). Vuoto = solo modalità demo con domande fisse.
 const PROXY_URL_LIVE = "https://facti-avatar.gudamee.workers.dev";
 const AI_TIMEOUT_MS = 9000;
-// local tests only: ?proxy=http://localhost:8787
+// solo per test in locale: ?proxy=http://localhost:8787
 const PROXY_URL = (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && new URLSearchParams(location.search).get("proxy")) || PROXY_URL_LIVE;
 // ==================================================
 
@@ -221,73 +221,72 @@ const show = (id) => { document.querySelectorAll(".screen").forEach(s => s.class
 
 const state = { mode: (PROXY_URL && !FORCE_DEMO) ? "ai" : "demo", history: [], answers: [], step: 0, done: false, scheda: null, consigli: [], busy: false };
 
-// ---------- fixed questions (demo mode) ----------
+// ---------- domande fisse (modalità demo) ----------
 const QUESTIONS = [
-  () => "Hi! I'm the avatar of Facti, non parole. I'll ask you a few questions about your hard skills. I don't give grades. What's your name?",
-  (n) => `Nice to meet you${n ? ", " + n : ""}! What do you study, or what did you study?`,
-  () => "Great. Tell me about a project you did, at university or on your own.",
-  () => "Have you had any jobs, internships or volunteering? What did you do, in practice?",
-  () => "Which tools or software do you use? For example Excel, Canva, Python.",
-  () => "Which languages do you speak, and at what level?",
-  () => "Is there a concrete result you are proud of?",
-  () => "Last question: what role are you looking for in your first job?",
+  () => "Ciao! Sono l'avatar di Facti, non parole. Ti faccio qualche domanda sulle tue hard skill. Non ti do voti. Come ti chiami?",
+  (n) => `Piacere${n ? ", " + n : ""}! Cosa studi, o cosa hai studiato?`,
+  () => "Bene. Raccontami un progetto che hai fatto, all'università o per conto tuo.",
+  () => "Hai fatto lavori, stage o volontariato? Cosa facevi, in concreto?",
+  () => "Quali strumenti o software usi? Per esempio Excel, Canva, Python.",
+  () => "Quali lingue parli, e a che livello?",
+  () => "C'è un risultato concreto di cui sei fiero o fiera?",
+  () => "Ultima domanda: che ruolo cerchi per il tuo primo lavoro?",
 ];
-const CLOSING = "Thank you! Your hard-skill sheet is ready. It will help you in the human interview. Good luck!";
-const OFFTOPIC = /(recipe|carbonara|joke|homework|write (me )?(a|some) (code|essay|poem)|who (made|created|built) you|ignore (the|your|all)|prompt|instructions|politic|football|soccer)/i;
-const TIPS_RE = /(\btips?\b|advice|\bhelp\b|how (do|should|can) i prepare|prepare for|human interview|nervous|typical questions|soft skills?)/i;
+const CLOSING = "Grazie! La tua scheda hard skill è pronta. Ti servirà per il colloquio umano. In bocca al lupo!";
+const TIPS_RE = /(consigl|aiut|come mi preparo|come posso prepararmi|prepararmi|colloquio umano|domande tipiche|ansia|agitat|soft skill)/i;
 const GENERAL_TIPS = [
-  "Prepare a 1-minute introduction: what you study, one project, what you want to do.",
-  "Tell your experiences with the STAR method: Situation, Task, Action, Result.",
-  "Bring one concrete example with a number (for example: +20% engagement).",
-  "Practise typical questions: \"Tell me about yourself\", \"A problem you solved\", \"Why this role?\".",
-  "Soft skills: listen, ask one good question at the end, and say it openly when you don't know something.",
+  "Prepara una presentazione di 1 minuto: cosa studi, un progetto, cosa vuoi fare.",
+  "Racconta le esperienze con il metodo STAR: Situazione, Compito, Azione, Risultato.",
+  "Porta un esempio concreto con un numero (per esempio: +20% di interazioni).",
+  "Allenati sulle domande tipiche: \"Parlami di te\", \"Un problema che hai risolto\", \"Perché questo ruolo?\".",
+  "Soft skill: ascolta, fai una buona domanda alla fine, e di' con sincerità quando non sai qualcosa.",
 ];
 function tipsSpeech() {
-  return "Here are some tips for the human interview. One: prepare a one-minute introduction. Two: tell your experiences with the STAR method: situation, task, action, result. Three: bring one concrete example with a number. Four: practise typical questions, like: tell me about yourself, or a problem you solved. And stay calm: it's a conversation, not an exam.";
+  return "Ecco qualche consiglio per il colloquio umano. Uno: prepara una presentazione di un minuto. Due: racconta le esperienze con il metodo STAR: situazione, compito, azione, risultato. Tre: porta un esempio concreto con un numero. Quattro: allenati sulle domande tipiche, come: parlami di te, o un problema che hai risolto. E stai tranquillo: è una conversazione, non un esame.";
 }
+const OFFTOPIC = /(ricett|carbonara|barzellett|compiti|scrivi(mi)? (un|una) (codice|tema|poesia)|chi ti ha (fatto|creato)|ignora le|prompt|istruzioni|politic|calcio)/i;
 
-// ---------- keyword rules ----------
+// ---------- regole a parole chiave ----------
 const CATS = [
-  ["Data and analytics", /\b(data|analys|analyt|statistic|excel|power ?bi|tableau|sql|python|dashboard|machine learning)/gi, ["Excel and pivot tables", "Reading a dashboard", "How you explain an analysis to non-technical people"]],
-  ["Software development and IT", /\b(programm|develop|coding|code|software|java|javascript|python|react|app\b|website|web\b|computer science|git|cloud|database)/gi, ["A code project to show (GitHub)", "How you fixed a bug", "Working in a team with Git"]],
-  ["Marketing and communication", /\b(marketing|social|instagram|tiktok|linkedin|communicat|campaign|ads\b|seo|brand|content|copywrit|journalis|advertis)/gi, ["A campaign you worked on and its results", "Social media analytics tools", "How you write for a specific audience"]],
-  ["Design and creativity", /\b(design|graphic|canva|figma|photoshop|illustrator|ux|ui\b|video|photo|creativ|architect)/gi, ["A portfolio with 3 works", "How you take feedback on your design", "The tools you use and why"]],
-  ["Economics, finance and administration", /\b(econom|financ|accounting|balance sheet|administrat|bank|budget|audit|controlling)/gi, ["Reading a simple balance sheet", "Excel for budgets and forecasts", "A practical case of cost analysis"]],
-  ["Engineering and technical", /\b(engineer|mechanic|electronic|cad\b|autocad|solidworks|matlab|plant|production|energy|construction)/gi, ["A technical project explained in 2 minutes", "Technical software you used", "Safety and quality"]],
-  ["Sales and business development", /\b(sales|selling|commercial|customer|client|shop|store|crm|retail|business)/gi, ["How you handle a difficult customer", "A sales target you reached", "Using a CRM"]],
-  ["Human resources and organisation", /\b(human resources|\bhr\b|recruit|selection|psycholog|training|organi[sz]ation)/gi, ["The selection process", "Onboarding tools", "How you give feedback"]],
-  ["Legal", /\b(law\b|legal|lawyer|contract|privacy|gdpr|notary)/gi, ["A practical contract case", "Privacy and GDPR in a company", "How you explain a rule simply"]],
-  ["Science and healthcare", /\b(biolog|chemi|medic|pharma|nurs|laborator|lab\b|health|biotech|physics)/gi, ["Lab techniques you know", "A research project", "Precision and protocols"]],
+  ["Dati e analisi", /\b(dati|data|analisi|analist|statistic|excel|power ?bi|tableau|sql|python|r studio|dashboard|machine learning)\b/gi, ["Excel e tabelle pivot", "Lettura di un dashboard", "Come racconti un'analisi a chi non è tecnico"]],
+  ["Sviluppo software e IT", /\b(programm|sviluppat|developer|codice|software|java|javascript|python|react|app|sito|web|informatic|git|cloud|database)\b/gi, ["Un progetto di codice da mostrare (GitHub)", "Come hai risolto un bug", "Lavorare in team con Git"]],
+  ["Marketing e comunicazione", /\b(marketing|social|instagram|tiktok|linkedin|comunicazion|campagn|ads|seo|brand|contenut|copy|giornal|pubblicit)\b/gi, ["Una campagna che hai seguito e i risultati", "Strumenti di analisi dei social", "Come scrivi per un pubblico preciso"]],
+  ["Design e creatività", /\b(design|grafic|canva|figma|photoshop|illustrator|ux|ui|video|foto|creativ|architett)\b/gi, ["Un portfolio con 3 lavori", "Come ricevi un feedback sul design", "Gli strumenti che usi e perché"]],
+  ["Economia, finanza e amministrazione", /\b(economi|finanz|contabil|bilanci|amministraz|banca|budget|controllo di gestione|revision|commercialist)\b/gi, ["Leggere un bilancio semplice", "Excel per budget e previsioni", "Un caso pratico di analisi dei costi"]],
+  ["Ingegneria e tecnica", /\b(ingegner|meccanic|elettronic|cad|autocad|solidworks|matlab|impiant|produzion|energia|edil)\b/gi, ["Un progetto tecnico spiegato in 2 minuti", "Software tecnici usati", "Sicurezza e qualità"]],
+  ["Vendite e business development", /\b(vendit|commercial|clienti|negozi|sales|crm|retail|business)\b/gi, ["Come gestisci un cliente difficile", "Un obiettivo di vendita raggiunto", "Uso di un CRM"]],
+  ["Risorse umane e organizzazione", /\b(risorse umane|hr|recruit|selezione|psicolog|formazion|organizzaz)\b/gi, ["Il processo di selezione", "Strumenti per l'onboarding", "Come dai un feedback"]],
+  ["Legale", /\b(giurisprudenz|legal|diritto|avvocat|contratt|privacy|gdpr|notai)\b/gi, ["Un caso pratico di contratto", "Privacy e GDPR in azienda", "Come spieghi una norma in modo semplice"]],
+  ["Scienze e sanità", /\b(biolog|chimic|medicin|farmac|infermier|laborator|sanit|biotec|fisica)\b/gi, ["Le tecniche di laboratorio che conosci", "Un progetto di ricerca", "Precisione e protocolli"]],
 ];
 const TOOLS = ["Excel","Google Sheets","Power BI","Tableau","SQL","Python","R","Java","JavaScript","React","HTML","CSS","Git","GitHub","Canva","Figma","Photoshop","Illustrator","Premiere","AutoCAD","SolidWorks","MATLAB","SAP","Salesforce","HubSpot","Google Analytics","Meta Ads","Google Ads","WordPress","Notion","Word","PowerPoint","ChatGPT"];
-const LANGS = [["english","English"],["italian","Italian"],["spanish","Spanish"],["french","French"],["german","German"],["chinese","Chinese"],["arabic","Arabic"],["portuguese","Portuguese"],["russian","Russian"]];
-const SKILLWORDS = [[/data analys|analy[sz]ing data|analysis/i,"Data analysis"],[/social|instagram|tiktok/i,"Social media management"],[/campaign|ads\b/i,"Online advertising campaigns"],[/website|\bweb\b/i,"Website development or management"],[/project/i,"Project management"],[/present|pitch/i,"Presenting results"],[/report|dashboard/i,"Reporting"],[/customer|client|sales/i,"Customer relations"],[/accounting|balance sheet/i,"Basic accounting"],[/research|laborator/i,"Research methods"],[/graphic|design/i,"Graphic design"],[/video|photo/i,"Visual content production"],[/programm|coding|\bcode\b|develop/i,"Programming"]];
+const LANGS = [["inglese","Inglese"],["spagnolo","Spagnolo"],["francese","Francese"],["tedesco","Tedesco"],["cinese","Cinese"],["arabo","Arabo"],["portoghese","Portoghese"],["russo","Russo"]];
+const SKILLWORDS = [[/analisi (dei )?dati|data analysis/i,"Analisi dei dati"],[/social|instagram|tiktok/i,"Gestione dei social media"],[/campagn|ads/i,"Campagne pubblicitarie online"],[/sito|web/i,"Sviluppo o gestione siti web"],[/progett/i,"Gestione di progetti"],[/present|pitch/i,"Presentare risultati"],[/report|dashboard/i,"Reportistica"],[/clienti|vendit/i,"Relazione con i clienti"],[/contabil|bilanci/i,"Contabilità di base"],[/ricerca|laborator/i,"Metodo di ricerca"],[/grafic|design/i,"Progettazione grafica"],[/video|foto/i,"Produzione di contenuti visivi"],[/programm|codice|sviluppat/i,"Programmazione"]];
 const esc = (s) => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const cap = (s) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 
 function extractName(t) {
   t = (t || "").trim();
-  const m = t.match(/(?:my name is|my name's|i am|i'm|call me|name[:\s]+)\s*([A-Za-zÀ-ÿ']+(?:\s+[A-ZÀ-Ý][a-zà-ÿ']+)?)/i);
+  const m = t.match(/(?:mi chiamo|sono|il mio nome è|nome[:\s]+)\s*([A-Za-zÀ-ÿ']+(?:\s+[A-ZÀ-Ý][a-zà-ÿ']+)?)/i);
   let n = m ? m[1] : t.split(/[\s,.!]+/).filter(Boolean).slice(0, 2).join(" ");
   n = n.split(/\s+/).map(cap).join(" ");
   return n.length > 40 ? "" : n;
 }
 function keywordScheda(ans) {
   const all = ans.join(" \n ");
-  let best = ["Other", 0, ["Telling a project in 2 minutes", "The tools you use", "What you want to learn in a company"]];
+  let best = ["Altro", 0, ["Raccontare un progetto in 2 minuti", "Gli strumenti che usi", "Cosa vuoi imparare in azienda"]];
   for (const [name, re, temi] of CATS) { const n = (all.match(re) || []).length; if (n > best[1]) best = [name, n, temi]; }
   const strumenti = TOOLS.filter(t => new RegExp("(^|[^a-z])" + t.replace(/[.+]/g, "\\$&") + "([^a-z]|$)", "i").test(all));
   const lingue = LANGS.filter(([k]) => all.toLowerCase().includes(k)).map(([k, L]) => { const lv = all.match(new RegExp(k + "[^,.;]*?\\b([ABC][12])\\b", "i")); return L + (lv ? " " + lv[1].toUpperCase() : ""); });
-  const lingue2 = lingue.filter(l => !/^English$/.test(l) || /english [abc][12]|english|fluent/i.test(all));
   const comp = SKILLWORDS.filter(([re]) => re.test(all)).map(([, s]) => s);
   return {
     nome: extractName(ans[0] || ""),
     studi: (ans[1] || "").slice(0, 180),
     esperienze: [ans[2], ans[3]].filter(a => a && a.length > 3).map(a => a.slice(0, 200)),
     categoria: best[0],
-    competenze: [...new Set([...comp, ...lingue2.map(l => "Language: " + l)])].slice(0, 10),
+    competenze: [...new Set([...comp, ...lingue.map(l => "Lingua: " + l)])].slice(0, 10),
     strumenti,
-    temi: [...best[2], ans[6] ? "Tell the result you are proud of, with numbers" : "Prepare one concrete example with a result", ans[7] ? "Why you want the role: " + ans[7].slice(0, 70) : "What role you want and why"],
+    temi: [...best[2], ans[6] ? "Racconta con numeri il risultato di cui sei fiero" : "Prepara un esempio concreto con un risultato", ans[7] ? "Perché vuoi il ruolo: " + ans[7].slice(0, 70) : "Che ruolo cerchi e perché"],
   };
 }
 function mergeScheda(ai, kw) {
@@ -310,7 +309,7 @@ async function initAvatar() {
     head = await Promise.race([load, t]);
     window.__avatar = "3d";
   } catch (e) {
-    console.warn("3D avatar not available, using SVG:", e);
+    console.warn("Avatar 3D non disponibile, uso SVG:", e);
     svgMode = true; window.__avatar = "svg";
     $("avatar3d").hidden = true; $("avatarSvg").hidden = false;
     blinkLoop();
@@ -318,7 +317,7 @@ async function initAvatar() {
 }
 function blinkLoop() { setInterval(() => { ["eyeL","eyeR"].forEach(i => $(i).setAttribute("ry", 2)); setTimeout(() => ["eyeL","eyeR"].forEach(i => $(i).setAttribute("ry", 15)), 140); }, 3600); }
 
-// visemes from letters (rough approximation)
+// viseme dalle lettere (l'italiano si legge come si scrive)
 const V = { a:"aa", à:"aa", e:"E", è:"E", é:"E", i:"I", ì:"I", o:"O", ò:"O", u:"U", ù:"U", p:"PP", b:"PP", m:"PP", f:"FF", v:"FF", t:"DD", d:"DD", n:"nn", l:"nn", s:"SS", z:"SS", c:"kk", g:"kk", k:"kk", q:"kk", r:"RR", h:null };
 const VISEMES = ["aa","E","I","O","U","PP","FF","DD","nn","SS","kk","RR","CH","TH"];
 let mouthRAF = null;
@@ -345,40 +344,40 @@ function stopMouth() {
   if (svgMode) { $("mouth").setAttribute("ry", 4); $("mouth").setAttribute("rx", 34); }
 }
 
-// ---------- voice ----------
-let itVoice = null; // English voice (name kept for brevity)
-function pickVoice() { const vs = speechSynthesis.getVoices(); itVoice = vs.find(v => /en[-_](US|GB)/i.test(v.lang) && /google|samantha|female|aria|jenny|libby|sonia|serena/i.test(v.name)) || vs.find(v => /en[-_](US|GB)/i.test(v.lang)) || vs.find(v => /^en/i.test(v.lang)) || null; }
+// ---------- voce ----------
+let itVoice = null;
+function pickVoice() { const vs = speechSynthesis.getVoices(); itVoice = vs.find(v => /it[-_]IT/i.test(v.lang) && /google|elsa|alice|female|donna/i.test(v.name)) || vs.find(v => /^it/i.test(v.lang)) || null; }
 if ("speechSynthesis" in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
 function setState(cls, txt) { const s = $("state"); s.className = "state " + cls; s.textContent = txt; }
 
 function speak(text) {
   return new Promise((resolve) => {
     $("subtitle").textContent = text;
-    setState("speak", "Speaking");
-    const CPS = 14; // characters per second (estimate)
+    setState("speak", "Sta parlando");
+    const CPS = 14; // caratteri al secondo (stima)
     let base = 0, baseT = performance.now();
     const getPos = () => base + (performance.now() - baseT) / 1000 * CPS;
-    const finish = () => { stopMouth(); setState("", "Your turn"); resolve(); };
+    const finish = () => { stopMouth(); setState("", "Tocca a te"); resolve(); };
     const canTTS = $("voiceOn").checked && "speechSynthesis" in window && (itVoice || speechSynthesis.getVoices().length);
-    if (!canTTS) { // no voice: the mouth still moves, the text stays
+    if (!canTTS) { // nessuna voce: la bocca si muove comunque, il testo resta
       startMouth(text, getPos);
       setTimeout(finish, Math.min(9000, 600 + text.length / CPS * 1000));
       return;
     }
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = (itVoice && itVoice.lang) || "en-US"; if (itVoice) u.voice = itVoice; u.rate = 1.02; u.pitch = 1.05;
+    u.lang = "it-IT"; if (itVoice) u.voice = itVoice; u.rate = 1.02; u.pitch = 1.05;
     let started = false;
     u.onstart = () => { started = true; base = 0; baseT = performance.now(); startMouth(text, getPos); };
     u.onboundary = (e) => { base = e.charIndex; baseT = performance.now(); };
     u.onend = finish; u.onerror = finish;
     speechSynthesis.speak(u);
-    // safety: if the voice does not start within 2 s, continue without it
+    // sicurezza: se la voce non parte entro 2 s, continuiamo senza
     setTimeout(() => { if (!started) { speechSynthesis.cancel(); startMouth(text, getPos); setTimeout(finish, Math.min(9000, text.length / CPS * 1000)); } }, 2000);
   });
 }
 
-// speech recognition (Chrome / Edge)
+// riconoscimento vocale (Chrome / Edge)
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 let rec = null, listening = false;
 if (!SR) { $("micBtn").hidden = true; }
@@ -386,56 +385,56 @@ function listen() {
   if (!SR || state.busy || state.done) return;
   if (listening) { rec && rec.stop(); return; }
   speechSynthesis && speechSynthesis.cancel();
-  rec = new SR(); rec.lang = /en-GB/i.test(navigator.language) ? "en-GB" : "en-US"; rec.interimResults = true; rec.maxAlternatives = 1;
+  rec = new SR(); rec.lang = "it-IT"; rec.interimResults = true; rec.maxAlternatives = 1;
   let finalTxt = "";
-  rec.onstart = () => { listening = true; $("micBtn").classList.add("on"); $("micBtn").innerHTML = "■<span class='lbl'> Stop</span>"; setState("listen", "Listening"); };
+  rec.onstart = () => { listening = true; $("micBtn").classList.add("on"); $("micBtn").innerHTML = "■<span class='lbl'> Stop</span>"; setState("listen", "Ti ascolto"); };
   rec.onresult = (e) => { let t = ""; for (const r of e.results) { t += r[0].transcript; if (r.isFinal) finalTxt = t; } $("txt").value = t; };
   rec.onerror = () => {};
-  rec.onend = () => { listening = false; $("micBtn").classList.remove("on"); $("micBtn").innerHTML = "🎤<span class='lbl'> Speak</span>"; setState("", "Your turn"); const v = $("txt").value.trim(); if (v) send(v); };
+  rec.onend = () => { listening = false; $("micBtn").classList.remove("on"); $("micBtn").innerHTML = "🎤<span class='lbl'> Parla</span>"; setState("", "Tocca a te"); const v = $("txt").value.trim(); if (v) send(v); };
   rec.start();
 }
 
 // ---------- chat ----------
 function addMsg(who, text) {
   const d = document.createElement("div"); d.className = "msg " + (who === "ai" ? "ai" : "me");
-  d.innerHTML = `<span class="who">${who === "ai" ? "Facti avatar" : "You"}</span>${esc(text)}`;
+  d.innerHTML = `<span class="who">${who === "ai" ? "Avatar Facti" : "Tu"}</span>${esc(text)}`;
   $("log").appendChild(d); $("log").scrollTop = $("log").scrollHeight;
 }
 function updateSteps() {
   const n = Math.min(state.answers.length + 1, 8);
   $("stepsBar").style.width = (state.done ? 100 : (state.answers.length / 8) * 100) + "%";
-  $("stepsTxt").textContent = state.done ? "Interview finished" : `Question ${n} of about 8`;
+  $("stepsTxt").textContent = state.done ? "Colloquio finito" : `Domanda ${n} di circa 8`;
 }
-function setMode(m) { state.mode = m; const t = $("modeTag"); t.textContent = m === "ai" ? "AI mode (Gemini)" : "Demo mode · fixed questions"; t.classList.toggle("demo", m !== "ai"); window.__mode = m; }
+function setMode(m) { state.mode = m; const t = $("modeTag"); t.textContent = m === "ai" ? "Modalità AI (Gemini)" : "Modalità demo · domande fisse"; t.classList.toggle("demo", m !== "ai"); window.__mode = m; }
 
 async function askAI() {
   const ctrl = new AbortController(); const to = setTimeout(() => ctrl.abort(), AI_TIMEOUT_MS);
   try {
     const r = await fetch(PROXY_URL.replace(/\/$/, "") + "/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ messages: state.history }), signal: ctrl.signal });
     if (!r.ok) throw new Error("http " + r.status);
-    const d = await r.json(); if (!d.say) throw new Error("empty"); return d;
+    const d = await r.json(); if (!d.say) throw new Error("vuoto"); return d;
   } finally { clearTimeout(to); }
 }
 function currentQ() { return QUESTIONS[Math.max(0, state.step - 1)](extractName(state.answers[0] || "")).replace(/^[^!.?]*[!.] /, ""); }
 function scriptedNext(lastUser, isTip) {
   if (isTip) {
-    return { say: tipsSpeech() + (state.step > 0 ? " Now, back to the interview: " + currentQ() : ""), done: false, tips: true };
+    return { say: tipsSpeech() + (state.step > 0 ? " Ora torniamo al colloquio: " + currentQ() : ""), done: false, tips: true };
   }
   if (lastUser && OFFTOPIC.test(lastUser) && state.step > 0) {
     state.answers.pop();
-    return { say: "Here I only run the hard-skill interview, and I can give tips for the human interview. Back to us: " + currentQ(), done: false };
+    return { say: "Qui faccio solo il colloquio sulle hard skill, e posso darti consigli per il colloquio umano. Torniamo a noi: " + currentQ(), done: false };
   }
   if (state.step >= QUESTIONS.length) return { say: CLOSING, done: true };
   const q = QUESTIONS[state.step](extractName(state.answers[0] || "")); state.step++;
   return { say: q, done: false };
 }
 async function avatarTurn(lastUser, isTip) {
-  state.busy = true; $("sendBtn").disabled = true; $("tipsBtn").disabled = true; setState("think", "Thinking");
+  state.busy = true; $("sendBtn").disabled = true; $("tipsBtn").disabled = true; setState("think", "Sta pensando");
   let d = null;
   if (state.mode === "ai") {
     try { d = await askAI(); }
     catch (e) {
-      console.warn("AI not available, switching to demo mode:", e.message);
+      console.warn("AI non disponibile, passo alla modalità demo:", e.message);
       setMode("demo"); state.step = Math.min(state.answers.length, QUESTIONS.length);
     }
   }
@@ -461,7 +460,7 @@ async function send(text) {
   await avatarTurn(text, isTip);
 }
 
-// ---------- sheet and PDF ----------
+// ---------- scheda e PDF ----------
 let finalScheda = null;
 function finishInterview() {
   speechSynthesis && speechSynthesis.cancel(); stopMouth();
@@ -469,14 +468,14 @@ function finishInterview() {
   finalScheda.consigli = (state.consigli && state.consigli.length ? state.consigli : GENERAL_TIPS).slice(0, 5);
   const s = finalScheda, li = (a) => (a && a.length ? a.map(x => `<li>${esc(x)}</li>`).join("") : "<li>—</li>");
   $("scheda").innerHTML = `
-    <div class="grid2"><div><h3 style="margin-top:0">Name</h3><p>${esc(s.nome || "—")}</p><h3>Studies</h3><p>${esc(s.studi || "—")}</p></div>
-    <div><h3 style="margin-top:0">Hard-skill category</h3><span class="cat">${esc(s.categoria)}</span><p class="note" style="margin-top:8px">A classification, not a grade.</p></div></div>
-    <h3>Experience</h3><ul class="clean">${li(s.esperienze)}</ul>
-    <h3>Hard skills</h3><ul class="chips">${li(s.competenze)}</ul>
-    <h3>Tools</h3><ul class="chips">${li(s.strumenti)}</ul>
-    <h3>To prepare for the human interview</h3><ul class="chips t">${li(s.temi)}</ul>
-    <h3>💡 Tips for the human interview</h3><ul class="clean">${li(s.consigli)}</ul>
-    <p class="note" style="margin-top:16px">Created in ${state.mode === "ai" ? "AI mode (Gemini)" : "demo mode (fixed questions and keywords)"} · ${new Date().toLocaleString("en-GB")}</p>`;
+    <div class="grid2"><div><h3 style="margin-top:0">Nome</h3><p>${esc(s.nome || "—")}</p><h3>Studi</h3><p>${esc(s.studi || "—")}</p></div>
+    <div><h3 style="margin-top:0">Categoria di hard skill</h3><span class="cat">${esc(s.categoria)}</span><p class="note" style="margin-top:8px">Catalogazione, non è un voto.</p></div></div>
+    <h3>Esperienze</h3><ul class="clean">${li(s.esperienze)}</ul>
+    <h3>Hard skill</h3><ul class="chips">${li(s.competenze)}</ul>
+    <h3>Strumenti</h3><ul class="chips">${li(s.strumenti)}</ul>
+    <h3>Da preparare per il colloquio umano</h3><ul class="chips t">${li(s.temi)}</ul>
+    <h3>💡 Consigli per il colloquio umano</h3><ul class="clean">${li(s.consigli)}</ul>
+    <p class="note" style="margin-top:16px">Creata in modalità ${state.mode === "ai" ? "AI (Gemini)" : "demo (domande fisse e parole chiave)"} · ${new Date().toLocaleString("it-IT")}</p>`;
   show("s-result");
 }
 function buildPdf() {
@@ -486,44 +485,44 @@ function buildPdf() {
   const W = 210, M = 18; let y = 0;
   const clean = (t) => String(t || "—").replace(/[^\x20-\x7E\u00A0-\u00FF€]/g, "");
   doc.setFillColor(26, 29, 86); doc.rect(0, 0, W, 38, "F");
-  doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.text("HARD-SKILL SHEET", M, 18);
-  doc.setFontSize(11); doc.setFont("helvetica", "normal"); doc.text("Facti, non parole · entry interview with the AI avatar", M, 27);
+  doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.text("SCHEDA HARD SKILL", M, 18);
+  doc.setFontSize(11); doc.setFont("helvetica", "normal"); doc.text("Facti, non parole · colloquio con l'avatar AI", M, 27);
   doc.setFillColor(240, 241, 0); doc.rect(M, 31, 60, 2.2, "F");
   y = 48; doc.setTextColor(17);
   const section = (title) => { if (y > 262) { doc.addPage(); y = 20; } doc.setFillColor(0, 243, 243); doc.rect(M, y - 4.5, 3, 6, "F"); doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.text(title.toUpperCase(), M + 5, y); y += 6.3; doc.setFont("helvetica", "normal"); doc.setFontSize(11); };
   const para = (t) => { const lines = doc.splitTextToSize(clean(t), W - 2 * M); for (const l of lines) { if (y > 280) { doc.addPage(); y = 20; } doc.text(l, M, y); y += 5.0; } y += 2; };
   const list = (a) => { if (!a || !a.length) { para("—"); return; } for (const x of a) { const lines = doc.splitTextToSize(clean(x), W - 2 * M - 6); lines.forEach((l, i) => { if (y > 280) { doc.addPage(); y = 20; } doc.text((i ? "   " : "-  ") + l, M + 1, y); y += 5.0; }); } y += 2; };
-  section("Name"); para(s.nome);
-  section("Studies"); para(s.studi);
-  section("Hard-skill category");
+  section("Nome"); para(s.nome);
+  section("Studi"); para(s.studi);
+  section("Categoria di hard skill");
   doc.setFillColor(240, 241, 0); doc.setFont("helvetica", "bold"); doc.setFontSize(14); const cw = doc.getTextWidth(clean(s.categoria).toUpperCase()) + 8; doc.rect(M, y - 6, cw, 9, "F"); doc.text(clean(s.categoria).toUpperCase(), M + 4, y); y += 10; doc.setFont("helvetica", "normal"); doc.setFontSize(11);
-  section("Experience"); list(s.esperienze);
-  section("Hard skills"); list(s.competenze);
-  section("Tools"); para((s.strumenti || []).join(", ") || "—");
-  section("To prepare for the human interview"); list(s.temi);
-  section("Tips for the human interview"); list(s.consigli);
+  section("Esperienze"); list(s.esperienze);
+  section("Hard skill"); list(s.competenze);
+  section("Strumenti"); para((s.strumenti || []).join(", ") || "—");
+  section("Da preparare per il colloquio umano"); list(s.temi);
+  section("Consigli per il colloquio umano"); list(s.consigli);
   if (y > 268) { doc.addPage(); y = 20; }
-  doc.setFillColor(240, 241, 0); doc.rect(M, y, W - 2 * M, 12, "F"); doc.setFont("helvetica", "bold"); doc.text("No grade, no promise of hiring.", M + 4, y + 7.8); y += 20;
+  doc.setFillColor(240, 241, 0); doc.rect(M, y, W - 2 * M, 12, "F"); doc.setFont("helvetica", "bold"); doc.text("Nessun voto, nessuna promessa di assunzione.", M + 4, y + 7.8); y += 20;
   doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); doc.setTextColor(90);
-  doc.text(doc.splitTextToSize(`Simulation · hackathon project H-ACK H-FARM College × Factanza (Team 19), not an official Factanza product. Mode: ${state.mode === "ai" ? "AI (Gemini)" : "demo"}. Created on ${new Date().toLocaleString("en-GB")}.`.replace("×", "x"), W - 2 * M), M, 287);
-  const fname = "hard-skill-sheet-" + (clean(s.nome).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "candidate") + ".pdf";
+  doc.text(doc.splitTextToSize(`Simulazione · progetto hackathon H-ACK H-FARM College × Factanza (Team 19), non è un prodotto ufficiale Factanza. Modalità: ${state.mode === "ai" ? "AI (Gemini)" : "demo"}. Creata il ${new Date().toLocaleString("it-IT")}.`.replace("×", "x"), W - 2 * M), M, 287);
+  const fname = "scheda-hard-skill-" + (clean(s.nome).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "candidato") + ".pdf";
   window.__pdfBytes = doc.output("arraybuffer").byteLength;
   doc.save(fname);
 }
 
-// ---------- start ----------
+// ---------- avvio ----------
 setMode(state.mode);
 const avatarReady = initAvatar();
 $("startBtn").onclick = async () => {
   show("s-talk");
-  if ("speechSynthesis" in window) { const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } // unlock audio
-  setState("think", "Getting ready");
+  if ("speechSynthesis" in window) { const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } // sblocca l'audio
+  setState("think", "Si prepara");
   await Promise.race([avatarReady, new Promise(r => setTimeout(r, 6000))]);
   await avatarTurn("");
 };
 $("form").onsubmit = (e) => { e.preventDefault(); send($("txt").value); };
 $("micBtn").onclick = listen;
-$("tipsBtn").onclick = () => { if (state.busy || state.done) return; send("Can you give me some tips for the human interview?"); };
+$("tipsBtn").onclick = () => { if (state.busy || state.done) return; send("Mi dai qualche consiglio per il colloquio umano?"); };
 $("endBtn").onclick = () => { if (state.answers.length === 0) return; finishInterview(); };
 $("pdfBtn").onclick = buildPdf;
 $("againBtn").onclick = () => location.reload();
