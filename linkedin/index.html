@@ -1,1 +1,384 @@
-<p>In arrivo</p>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Factanza Academy · simulazione pagina azienda</title>
+<style>
+:root{
+  --navy:#1A1D56;
+  --purple:#4F3FFF;
+  --pink:#FF3D9A;
+  --cyan:#00F3F3;
+  --yellow:#F0F100;
+  --lime:#D7FF3A;
+  --ink:#191919;
+  --muted:#666;
+  --line:#e0dfdc;
+  --bg:#f4f2ee;
+  --card:#fff;
+  --soft:#f2f2f2;
+  --chip:#e8f3ff;
+  --link:#3d2fd6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);
+  font-family:Inter,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  font-size:15px;line-height:1.4;-webkit-font-smoothing:antialiased}
+button,input{font:inherit}
+button{cursor:default;border:0;background:none}
+img{max-width:100%;display:block}
+.topbar{
+  position:sticky;top:0;z-index:40;
+  background:var(--navy);color:#fff;text-align:center;
+  font-size:13px;font-weight:650;letter-spacing:.01em;
+  padding:9px 16px;line-height:1.35;
+}
+.wrap{
+  max-width:1128px;margin:0 auto;padding:20px 24px 56px;
+  display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start;
+}
+.card-ui{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;
+}
+.profile.card-ui{overflow:visible}
+.emoji,.ic i{font-family:"Noto Color Emoji","Segoe UI Emoji","Apple Color Emoji",sans-serif}
+/* Profile */
+.cover{position:relative;height:176px;background:var(--cyan);overflow:hidden;color:var(--navy);border-radius:10px 10px 0 0}
+.cover .c1{position:absolute;right:-50px;top:-80px;width:240px;height:240px;border-radius:50%;background:var(--pink)}
+.cover .c2{position:absolute;left:-110px;bottom:-160px;width:210px;height:210px;border-radius:50%;background:var(--yellow)}
+.cover .txt{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:18px 24px 62px}
+.cover .kicker{font-size:11px;font-weight:800;letter-spacing:1.4px;opacity:.85}
+.cover .slogan{font-weight:900;font-size:30px;line-height:1.05;letter-spacing:-.5px;margin-top:4px}
+.cover .slogan em{font-style:normal;color:var(--navy)}
+.profile-body{padding:0 20px 8px}
+.profile-row{display:flex;gap:14px;align-items:flex-start}
+.av-co{
+  width:88px;height:88px;border-radius:8px;background:var(--navy);color:#fff;
+  font-weight:800;font-size:32px;letter-spacing:-.5px;
+  display:flex;align-items:center;justify-content:center;
+  border:3px solid #fff;margin-top:-44px;flex:none;
+  box-shadow:0 0 0 1px var(--line);
+  position:relative;z-index:3;
+}
+.profile-info{flex:1;min-width:0;padding-top:10px}
+.profile-info h1{font-size:22px;font-weight:800;letter-spacing:-.3px;line-height:1.15}
+.bio{margin-top:6px;font-size:14.5px;line-height:1.45;color:#222}
+.followers{margin-top:6px;font-size:13.5px;color:var(--muted);font-weight:600}
+.profile-actions{display:flex;gap:8px;flex:none;padding-top:12px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  height:36px;padding:0 16px;border-radius:18px;font-size:15px;font-weight:700;
+  border:1px solid transparent;white-space:nowrap;
+}
+.btn-primary{background:var(--navy);color:#fff}
+.btn-ghost{background:#fff;color:var(--navy);border-color:var(--navy)}
+.tabs{display:flex;gap:4px;padding:4px 12px 0;border-top:1px solid var(--line);margin-top:8px;overflow-x:auto}
+.tabs span{
+  flex:none;padding:12px 14px 11px;font-size:14px;font-weight:700;color:#666;
+  border-bottom:3px solid transparent;
+}
+.tabs .on{color:var(--navy);border-bottom-color:var(--pink)}
+/* Sidebar */
+.side .card-ui{padding:16px 18px 18px}
+.side h2{font-size:16px;font-weight:750;margin-bottom:8px}
+.side p{font-size:13.5px;color:#333;line-height:1.45}
+.side .meta{margin-top:10px;font-size:13px;color:var(--muted);line-height:1.5}
+.side .meta b{color:var(--ink);font-weight:650}
+.note{
+  margin-top:12px;font-size:12px;color:#555;background:#f6f5f2;
+  border-radius:8px;padding:10px 12px;line-height:1.4;
+}
+/* Posts */
+.post{margin-top:12px;position:relative}
+.post-sim{
+  position:absolute;top:12px;right:12px;z-index:2;
+  background:#191919;color:#fff;font-size:10.5px;font-weight:600;
+  padding:3px 8px;border-radius:4px;letter-spacing:.2px;opacity:.82;
+}
+.post-head{display:flex;gap:10px;padding:14px 16px 6px;padding-right:170px}
+.av-sm{
+  width:48px;height:48px;border-radius:6px;background:var(--navy);color:#fff;
+  font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;flex:none;
+}
+.pname{font-weight:750;font-size:14.5px}
+.pmeta{font-size:12px;color:var(--muted);line-height:1.35}
+.trend{
+  display:inline-flex;align-items:center;gap:4px;margin-top:3px;
+  background:var(--chip);color:#0a4d8c;font-size:11px;font-weight:750;
+  padding:2px 8px;border-radius:10px;
+}
+.post-text{padding:6px 16px 12px;font-size:14.5px;line-height:1.5}
+.post-text .lead{font-weight:750}
+.post-text p+p,.post-text p+ul,.post-text ul+p{margin-top:.72em}
+.post-text ul{list-style:none}
+.post-text li{padding-left:0;margin:0 0 .35em}
+.hash{color:var(--link);font-weight:650}
+/* Visual cards */
+.visual{position:relative;overflow:hidden;min-height:300px;color:var(--navy)}
+.visual .c1{position:absolute;right:-60px;top:-50px;width:200px;height:200px;border-radius:50%;background:var(--pink)}
+.visual .c2{position:absolute;left:-36px;bottom:-80px;width:160px;height:160px;border-radius:50%}
+.visual.studenti{background:var(--cyan)}
+.visual.studenti .c2{background:var(--yellow)}
+.visual.aziende{background:var(--yellow)}
+.visual.aziende .c2{background:var(--cyan)}
+.visual-inner{position:relative;z-index:1;padding:16px 22px 10px;min-height:300px;display:flex;flex-direction:column}
+.brand{font-weight:800;font-size:13px;letter-spacing:.3px}
+.lab{font-weight:800;font-size:11px;letter-spacing:1.5px;margin-top:18px}
+.num{font-weight:900;font-size:clamp(56px,8.4vw,76px);color:var(--navy);letter-spacing:-2px;line-height:.95;margin:2px 0 8px}
+.cap{font-weight:800;font-size:15px;line-height:1.15;max-width:22em}
+.box{
+  margin:16px 16px 8px;background:#fff;border-left:7px solid var(--pink);
+  border-radius:4px;color:var(--navy);text-align:center;padding:12px 12px 14px;
+}
+.box .t1{font-weight:900;font-size:clamp(18px,2.2vw,22px);line-height:1.05}
+.box .t2{font-weight:900;font-size:clamp(18px,2.2vw,22px);color:var(--navy);line-height:1.05}
+.box .t3{font-weight:800;font-size:10px;letter-spacing:.5px;margin-top:7px}
+.src{margin-top:auto;font-size:10px;color:var(--navy);opacity:.8;padding-top:6px}
+/* Reactions */
+.react{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 16px;font-size:13px;color:var(--muted);border-bottom:1px solid #e9e9e9;flex-wrap:wrap}
+.ic{display:flex;align-items:center}
+.ic i{width:18px;height:18px;border-radius:50%;border:1.5px solid #fff;margin-right:-5px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-style:normal;color:#fff;line-height:1}
+.ic .l{background:#378fe9}.ic .c{background:#44a33a}.ic .h{background:#df704d}
+.ic b{font-weight:500;margin-left:10px;color:#555}
+.act{display:flex;justify-content:space-around;padding:4px 4px;border-bottom:1px solid #e9e9e9}
+.act button{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  height:40px;font-size:14px;font-weight:700;color:#555;border-radius:6px;
+}
+.act button svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* Comments */
+.composer{display:flex;gap:8px;align-items:center;padding:12px 16px 4px}
+.composer .fake{
+  flex:1;height:36px;border:1px solid var(--line);border-radius:18px;
+  color:#888;font-size:13.5px;display:flex;align-items:center;padding:0 14px;background:#fff;
+}
+.cm{display:flex;gap:8px;padding:8px 16px 0}
+.cav{width:32px;height:32px;border-radius:50%;color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex:none}
+.bub{background:var(--soft);border-radius:0 8px 8px 8px;padding:7px 10px;font-size:13px;line-height:1.4;flex:1;min-width:0}
+.bub .n{font-weight:750;font-size:13px}
+.bub .r{color:var(--muted);font-size:11.5px;font-weight:500}
+.cl{font-size:11.5px;color:var(--muted);padding:3px 0 0 56px}
+.more-cm{padding:10px 16px 14px;font-size:13px;font-weight:700;color:#555}
+.page-foot{text-align:center;padding:18px 20px 28px;font-size:12.5px;color:#333;line-height:1.55;border-top:1px solid var(--line);background:#efece7}
+
+@media (max-width:960px){
+  .wrap{grid-template-columns:1fr;padding:12px 10px 40px}
+  .side{order:2}
+  .post-head{padding-right:16px}
+  .post-sim{position:static;margin:10px 12px 0 auto;width:max-content}
+}
+@media (max-width:620px){
+  .topbar{font-size:11.5px;padding:8px 10px}
+  .cover{height:132px}
+  .cover .slogan{font-size:22px}
+  .cover .txt{padding:12px 14px 48px}
+  .cover .c2{left:-100px;bottom:-150px}
+  .av-co{width:68px;height:68px;font-size:24px;margin-top:-34px}
+  .profile-row{flex-direction:column;gap:0}
+  .profile-info{padding-top:8px}
+  .profile-info h1{font-size:20px}
+  .profile-actions{padding-top:10px;width:100%}
+  .profile-actions .btn{flex:1}
+  .tabs{padding:0 6px}
+  .tabs span{padding:11px 10px 10px;font-size:13px}
+  .post-text{font-size:14px;padding:6px 14px 12px}
+  .visual-inner{padding:14px 16px 10px;min-height:280px}
+  .box{margin:14px 4px 8px}
+  .act button span{display:none}
+  .act button{height:44px}
+  .cl{padding-left:48px}
+  .post-head{padding:10px 14px 6px}
+}
+</style>
+</head>
+<body>
+<div class="topbar">Simulazione · pagina e post non pubblicati · H-ACK Factanza</div>
+<div class="wrap">
+  <div class="main">
+    <section class="card-ui profile">
+      <div class="cover" aria-hidden="true">
+        <div class="c1"></div><div class="c2"></div>
+        <div class="txt">
+          <div class="kicker">FACTANZA ACADEMY</div>
+          <div class="slogan">FACTI,<br><em>NON PAROLE.</em></div>
+        </div>
+      </div>
+      <div class="profile-body">
+        <div class="profile-row">
+          <div class="av-co" aria-hidden="true">FA</div>
+          <div class="profile-info">
+            <h1>Factanza Academy</h1>
+            <p class="bio">Formazione di Factanza: soft skill, personal brand e il nuovo percorso 'Facti, non parole' dall'università al primo lavoro</p>
+            <p class="followers">48.215 follower</p>
+          </div>
+          <div class="profile-actions">
+            <button type="button" class="btn btn-primary">+ Segui</button>
+            <button type="button" class="btn btn-ghost">Messaggio</button>
+          </div>
+        </div>
+      </div>
+      <nav class="tabs" aria-label="Sezioni della pagina">
+        <span class="on">Post</span>
+        <span>Informazioni</span>
+        <span>Persone</span>
+      </nav>
+    </section>
+
+    <!-- POST 1: studenti -->
+    <article class="card-ui post">
+      <div class="post-sim">Simulazione · post non pubblicato</div>
+      <header class="post-head">
+        <div class="av-sm" aria-hidden="true">FA</div>
+        <div>
+          <div class="pname">Factanza Academy</div>
+          <div class="pmeta">48.215 follower</div>
+          <div class="pmeta">2 g · Pubblico</div>
+          <span class="trend"><span class="emoji">🔥</span> In tendenza</span>
+        </div>
+      </header>
+      <div class="post-text">
+        <p class="lead">Facti, non parole.</p>
+        <p>In Italia le assunzioni entry-level sono calate del 18,8% in un anno. E, in un’indagine internazionale, l’88% di chi inizia a lavorare dice di non sentirsi pronto.</p>
+        <p>Il problema non è solo trovare lavoro. È far vedere come lavori. Un CV non racconta come comunichi, collabori o affronti un imprevisto.</p>
+        <p>Per questo nasce Facti, non parole: il percorso di 3–6 mesi di Factanza Academy per passare dall’università al primo lavoro.</p>
+        <ul>
+          <li><span class="emoji">🔹</span> 24 ore online su soft skill e personal brand.</li>
+          <li><span class="emoji">🔹</span> Almeno 36 ore in azienda su problemi reali. Compito finale, feedback del tutor e portfolio.</li>
+        </ul>
+        <p>Per iniziare: colloquio con avatar AI (5 €). Nessun voto: riconosce la tua categoria di hard skill. Poi c’è un colloquio umano. Chi viene ammesso paga 200 €.</p>
+        <p>Non promettiamo un lavoro. Promettiamo che un’azienda ti vedrà lavorare.</p>
+        <p><span class="emoji">👉</span> Primo gruppo da H-FARM College. Link nei commenti.</p>
+        <p><span class="hash">#FactiNonParole</span> <span class="hash">#FactanzaAcademy</span> <span class="hash">#PrimoLavoro</span> <span class="hash">#SoftSkill</span></p>
+      </div>
+      <div class="visual studenti" aria-hidden="true">
+        <div class="c1"></div><div class="c2"></div>
+        <div class="visual-inner">
+          <div class="brand">Factanza Academy</div>
+          <div class="lab">IL DATO</div>
+          <div class="num">−18,8%</div>
+          <div class="cap">ASSUNZIONI ENTRY-LEVEL<br>IN ITALIA, SU BASE ANNUA</div>
+          <div class="box">
+            <div class="t1">FACTI,</div>
+            <div class="t2">NON PAROLE.</div>
+            <div class="t3">LE COMPETENZE SI DIMOSTRANO.</div>
+          </div>
+          <div class="src">Fonte dato: LinkedIn, Barometro del primo impiego 2026</div>
+        </div>
+      </div>
+      <div class="react">
+        <div class="ic"><i class="l">👍</i><i class="c">👏</i><i class="h">❤</i><b>1.248</b></div>
+        <div>186 commenti · 94 diffusioni</div>
+      </div>
+      <div class="act">
+        <button type="button"><svg viewBox="0 0 24 24"><path d="M7 11v9H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3zm0 0 4.2-7.2A2.2 2.2 0 0 1 14.1 5c.7.6.8 1.6.5 2.4L13.5 11H20a2 2 0 0 1 2 2.2l-.8 6A2 2 0 0 1 19.2 21H7"/></svg><span>Consiglia</span></button>
+        <button type="button"><svg viewBox="0 0 24 24"><path d="M21 12a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-2.9-.3-4.1-.9L3 21l1.5-5A8.5 8.5 0 1 1 21 12Z"/></svg><span>Commenta</span></button>
+        <button type="button"><svg viewBox="0 0 24 24"><path d="M7 7h10l-2.2-2.2"/><path d="M17 17H7l2.2 2.2"/><path d="M17 7v5a4 4 0 0 1-4 4H7"/><path d="M7 17v-5a4 4 0 0 1 4-4h6"/></svg><span>Diffondi</span></button>
+        <button type="button"><svg viewBox="0 0 24 24"><path d="M22 3 10 13"/><path d="M22 3 15 21l-5-8-8-5 20-5Z"/></svg><span>Invia</span></button>
+      </div>
+      <div class="composer"><div class="cav" style="background:#9aa0a6">Tu</div><div class="fake">Aggiungi un commento…</div></div>
+      <div class="cm"><div class="cav" style="background:#d7007f">G</div><div class="bub"><div class="n">Giulia R.</div><div class="r">Studentessa di Economia</div>Finalmente qualcuno che pensa a noi <span class="emoji">🙌</span></div></div>
+      <div class="cl">Consiglia · Rispondi · 212 like</div>
+      <div class="cm"><div class="cav" style="background:#0075bf">M</div><div class="bub"><div class="n">Marco T.</div><div class="r">Neolaureato in Ingegneria</div>Un CV non dice come lavori. Questo sì. Mi iscrivo al colloquio!</div></div>
+      <div class="cl">Consiglia · Rispondi · 87 like</div>
+      <div class="cm"><div class="cav" style="background:#00aca9">S</div><div class="bub"><div class="n">Sara L.</div><div class="r">Studentessa · H-FARM College</div>Ci sono anche io nel primo gruppo <span class="emoji">💪</span></div></div>
+      <div class="cl">Consiglia · Rispondi · 41 like</div>
+      <div class="cm"><div class="cav" style="background:#4F3FFF">L</div><div class="bub"><div class="n">Luca B.</div><div class="r">Neolaureato in Comunicazione</div>200 euro e un portfolio con il feedback dell’azienda: questo mi convince.</div></div>
+      <div class="cl">Consiglia · Rispondi · 28 like</div>
+      <div class="cm"><div class="cav" style="background:#1A1D56">C</div><div class="bub"><div class="n">Chiara M.</div><div class="r">Studentessa di Giurisprudenza</div>Mi piace che non promettete un lavoro. È onesto.</div></div>
+      <div class="cl">Consiglia · Rispondi · 19 like</div>
+      <div class="cm"><div class="cav" style="background:#ea5b0c">D</div><div class="bub"><div class="n">Davide F.</div><div class="r">Laureando in Economia e Management</div>Le 36 ore in azienda su un problema reale sono quello che manca all’università.</div></div>
+      <div class="cl">Consiglia · Rispondi · 14 like</div>
+      <div class="cm"><div class="cav" style="background:#831f82">E</div><div class="bub"><div class="n">Elena V.</div><div class="r">Neolaureata in Psicologia</div>Finalmente un modo per far vedere come comunichi e lavori in gruppo, non solo il voto.</div></div>
+      <div class="cl">Consiglia · Rispondi · 9 like</div>
+      <div class="more-cm">Vedi altri commenti</div>
+    </article>
+
+    <!-- POST 2: aziende -->
+    <article class="card-ui post">
+      <div class="post-sim">Simulazione · post non pubblicato</div>
+      <header class="post-head">
+        <div class="av-sm" aria-hidden="true">FA</div>
+        <div>
+          <div class="pname">Factanza Academy</div>
+          <div class="pmeta">48.215 follower</div>
+          <div class="pmeta">2 g · Pubblico</div>
+          <span class="trend"><span class="emoji">🔥</span> In tendenza</span>
+        </div>
+      </header>
+      <div class="post-text">
+        <p class="lead">Facti, non parole. Anche per chi assume.</p>
+        <p>Il 93,4% dei profili per laureati ricercati dalle imprese richiede esperienza. Ma un neolaureato l’esperienza come la fa?</p>
+        <p>Con Facti, non parole, il nuovo percorso di Factanza Academy, i giovani lavorano su un problema reale della vostra azienda prima di un’eventuale assunzione.</p>
+        <ul>
+          <li><span class="emoji">🔹</span> Arrivano già formati: 24 ore online di soft skill e personal brand con Factanza.</li>
+          <li><span class="emoji">🔹</span> Il colloquio con avatar AI riconosce la categoria di hard skill, senza voti. Poi la valutazione è umana.</li>
+          <li><span class="emoji">🔹</span> Almeno 36 ore di pratica da voi, online o in presenza. Potete prevederne di più.</li>
+          <li><span class="emoji">🔹</span> Un compito finale e il vostro feedback sui comportamenti osservati. Vedete come una persona ragiona, comunica e lavora in gruppo prima di assumere.</li>
+        </ul>
+        <p>Cerchiamo le prime aziende partner, anche PMI. Scriveteci.</p>
+        <p><span class="hash">#FactiNonParole</span> <span class="hash">#FactanzaAcademy</span> <span class="hash">#Recruiting</span> <span class="hash">#EmployerBranding</span></p>
+      </div>
+      <div class="visual aziende" aria-hidden="true">
+        <div class="c1"></div><div class="c2"></div>
+        <div class="visual-inner">
+          <div class="brand">Factanza Academy</div>
+          <div class="lab">IL DATO</div>
+          <div class="num">93,4%</div>
+          <div class="cap">DEI PROFILI PER LAUREATI<br>RICHIEDE ESPERIENZA</div>
+          <div class="box">
+            <div class="t1">FACTI,</div>
+            <div class="t2">NON PAROLE.</div>
+            <div class="t3">VEDI I TALENTI ALL’OPERA.</div>
+          </div>
+          <div class="src">Fonte dato: Excelsior–Unioncamere, Laureati e lavoro 2025</div>
+        </div>
+      </div>
+      <div class="react">
+        <div class="ic"><i class="l">👍</i><i class="c">👏</i><i class="h">❤</i><b>642</b></div>
+        <div>73 commenti · 38 diffusioni</div>
+      </div>
+      <div class="act">
+        <button type="button"><svg viewBox="0 0 24 24"><path d="M7 11v9H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3zm0 0 4.2-7.2A2.2 2.2 0 0 1 14.1 5c.7.6.8 1.6.5 2.4L13.5 11H20a2 2 0 0 1 2 2.2l-.8 6A2 2 0 0 1 19.2 21H7"/></svg><span>Consiglia</span></button>
+        <button type="button"><svg viewBox="0 0 24 24"><path d="M21 12a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-2.9-.3-4.1-.9L3 21l1.5-5A8.5 8.5 0 1 1 21 12Z"/></svg><span>Commenta</span></button>
+        <button type="button"><svg viewBox="0 0 24 24"><path d="M7 7h10l-2.2-2.2"/><path d="M17 17H7l2.2 2.2"/><path d="M17 7v5a4 4 0 0 1-4 4H7"/><path d="M7 17v-5a4 4 0 0 1 4-4h6"/></svg><span>Diffondi</span></button>
+        <button type="button"><svg viewBox="0 0 24 24"><path d="M22 3 10 13"/><path d="M22 3 15 21l-5-8-8-5 20-5Z"/></svg><span>Invia</span></button>
+      </div>
+      <div class="composer"><div class="cav" style="background:#9aa0a6">Tu</div><div class="fake">Aggiungi un commento…</div></div>
+      <div class="cm"><div class="cav" style="background:#ea5b0c">L</div><div class="bub"><div class="n">Laura P.</div><div class="r">HR Manager · PMI manifatturiera</div>Finalmente un modo per vedere i ragazzi all'opera prima di assumere.</div></div>
+      <div class="cl">Consiglia · Rispondi · 64 like</div>
+      <div class="cm"><div class="cav" style="background:#831f82">A</div><div class="bub"><div class="n">Andrea C.</div><div class="r">Talent Acquisition</div>36 ore su un problema reale valgono più di dieci colloqui. Vi scrivo.</div></div>
+      <div class="cl">Consiglia · Rispondi · 29 like</div>
+      <div class="cm"><div class="cav" style="background:#0075bf">F</div><div class="bub"><div class="n">Francesca D.</div><div class="r">Responsabile HR · Retail</div>Arrivano già formati sulle soft skill: per noi è un bel risparmio di tempo.</div></div>
+      <div class="cl">Consiglia · Rispondi · 18 like</div>
+      <div class="cm"><div class="cav" style="background:#00aca9">P</div><div class="bub"><div class="n">Paolo S.</div><div class="r">Titolare PMI</div>Anche una PMI può partecipare? Se sì, ci siamo.</div></div>
+      <div class="cl">Consiglia · Rispondi · 15 like</div>
+      <div class="cm"><div class="cav" style="background:#d7007f">M</div><div class="bub"><div class="n">Martina G.</div><div class="r">Recruiter</div>Il feedback sui comportamenti osservati è proprio quello che non trovi in un colloquio classico.</div></div>
+      <div class="cl">Consiglia · Rispondi · 11 like</div>
+      <div class="cm"><div class="cav" style="background:#1A1D56">R</div><div class="bub"><div class="n">Roberto N.</div><div class="r">People &amp; Culture Manager</div>Un compito finale e il portfolio: così valutiamo persone, non solo CV.</div></div>
+      <div class="cl">Consiglia · Rispondi · 8 like</div>
+      <div class="cm"><div class="cav" style="background:#4F3FFF">S</div><div class="bub"><div class="n">Silvia B.</div><div class="r">HR Business Partner</div>Cerchiamo partner: scriveteci. Lo facciamo anche noi.</div></div>
+      <div class="cl">Consiglia · Rispondi · 6 like</div>
+      <div class="more-cm">Vedi altri commenti</div>
+    </article>
+  </div>
+
+  <aside class="side">
+    <div class="card-ui">
+      <h2>Informazioni</h2>
+      <p>Formazione di Factanza: soft skill, personal brand e il nuovo percorso 'Facti, non parole' dall'università al primo lavoro</p>
+      <div class="meta">
+        <div><b>Settore</b><br>Formazione</div>
+        <div style="margin-top:8px"><b>Follower</b><br>48.215</div>
+      </div>
+      <p class="note">Pagina e post di simulazione per il pitch H-ACK, team 19 «Facti, non parole». Non sono stati pubblicati.</p>
+      <div style="margin-top:12px">
+        <button type="button" class="btn btn-ghost" style="width:100%">Visita il sito</button>
+      </div>
+    </div>
+  </aside>
+
+  </div>
+<footer class="page-foot">Progetto hackathon H-ACK H-FARM College × Factanza (21-22 nov 2026) · Team 19 · Brief 3 · Simulazione, non è un prodotto ufficiale Factanza.</footer>
+</body>
+</html>
