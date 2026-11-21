@@ -205,8 +205,10 @@ footer{margin-top:30px;font-size:.75rem;opacity:.7}
 <script type="module">
 // ================= CONFIGURAZIONE =================
 // URL del Worker Cloudflare (proxy Gemini). Vuoto = solo modalità demo con domande fisse.
-const PROXY_URL = "";
+const PROXY_URL_LIVE = "https://facti-avatar.gudamee.workers.dev";
 const AI_TIMEOUT_MS = 9000;
+// solo per test in locale: ?proxy=http://localhost:8787
+const PROXY_URL = (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && new URLSearchParams(location.search).get("proxy")) || PROXY_URL_LIVE;
 // ==================================================
 
 const qs = new URLSearchParams(location.search);
