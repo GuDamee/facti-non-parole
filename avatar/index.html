@@ -350,7 +350,8 @@ function pickVoice() { const vs = speechSynthesis.getVoices(); itVoice = vs.find
 if ("speechSynthesis" in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
 function setState(cls, txt) { const s = $("state"); s.className = "state " + cls; s.textContent = txt; }
 
-function speak(text) {
+function speakBrowser(text) {
+  window.__tts = "browser";
   return new Promise((resolve) => {
     $("subtitle").textContent = text;
     setState("speak", "Sta parlando");
@@ -377,6 +378,45 @@ function speak(text) {
   });
 }
 
+// ---------- voce ElevenLabs (via Worker), con riserva sulla voce del browser ----------
+const TTS_TIMEOUT_MS = 5000;
+const SILENT_MP3 = "data:audio/mpeg;base64,SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYxLjcuMTAzAAAAAAAAAAAAAAD/83DAAAAAAAAAAAAASW5mbwAAAA8AAAAGAAADKQBaWlpaWlpaWlpaWlpaWlpae3t7e3t7e3t7e3t7e3t7e3ucnJycnJycnJycnJycnJycvb29vb29vb29vb29vb29vb3e3t7e3t7e3t7e3t7e3t7e3v////////////////////8AAAAATGF2YzYxLjE5AAAAAAAAAAAAAAAAJAKjAAAAAAAAAymyjycdAAAAAAAAAAAAAAAAAP/zQMQAAAADSAAAAABMQU1FMy4xMDBVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxFsAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxKQAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80LEowAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80DEpAAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsSjAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQ==";
+const player = new Audio(); player.preload = "auto";
+let ttsFails = 0;
+function unlockAudio() { try { player.src = SILENT_MP3; const p = player.play(); if (p) p.catch(() => {}); } catch (e) {} }
+async function fetchTTS(text) {
+  const ctrl = new AbortController(); const to = setTimeout(() => ctrl.abort(), TTS_TIMEOUT_MS);
+  try {
+    const r = await fetch(PROXY_URL.replace(/\/$/, "") + "/tts", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: text.slice(0, 600) }), signal: ctrl.signal });
+    if (!r.ok) throw new Error("tts http " + r.status);
+    const d = await r.json(); if (!d.audio) throw new Error("tts vuoto"); return d;
+  } finally { clearTimeout(to); }
+}
+async function speak(text) {
+  $("subtitle").textContent = text;
+  if (!$("voiceOn").checked || !PROXY_URL || FORCE_DEMO || ttsFails >= 2) return speakBrowser(text);
+  let d;
+  try { d = await fetchTTS(text); ttsFails = 0; }
+  catch (e) { ttsFails++; console.warn("ElevenLabs non disponibile, uso la voce del browser:", e.message); return speakBrowser(text); }
+  return new Promise((resolve) => {
+    const al = d.alignment && Array.isArray(d.alignment.chars) && d.alignment.chars.length ? d.alignment : null;
+    const mouthText = al ? al.chars.join("") : text;
+    const getPos = al
+      ? () => { const t = player.currentTime, st = al.starts; let lo = 0, hi = st.length - 1; while (lo < hi) { const m = (lo + hi + 1) >> 1; if (st[m] <= t) lo = m; else hi = m - 1; } return (al.ends[lo] !== undefined && t > al.ends[lo] + 0.05 && mouthText[lo + 1] === " ") ? lo + 1 : lo; }
+      : () => player.currentTime * 14;
+    let done = false, started = false;
+    const finish = () => { if (done) return; done = true; stopMouth(); setState("", "Tocca a te"); resolve(); };
+    const toBrowser = () => { if (done) return; done = true; stopMouth(); speakBrowser(text).then(resolve); };
+    player.onended = finish;
+    player.onerror = () => (started ? finish() : toBrowser());
+    player.src = "data:" + (d.mime || "audio/mpeg") + ";base64," + d.audio;
+    setState("speak", "Sta parlando");
+    const p = player.play();
+    (p || Promise.resolve()).then(() => { started = true; window.__tts = "elevenlabs"; startMouth(mouthText, getPos); }).catch(toBrowser);
+    setTimeout(finish, 90000);
+  });
+}
+
 // riconoscimento vocale (Chrome / Edge)
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 let rec = null, listening = false;
@@ -384,7 +424,7 @@ if (!SR) { $("micBtn").hidden = true; }
 function listen() {
   if (!SR || state.busy || state.done) return;
   if (listening) { rec && rec.stop(); return; }
-  speechSynthesis && speechSynthesis.cancel();
+  speechSynthesis && speechSynthesis.cancel(); try { player.pause(); } catch (e) {}
   rec = new SR(); rec.lang = "it-IT"; rec.interimResults = true; rec.maxAlternatives = 1;
   let finalTxt = "";
   rec.onstart = () => { listening = true; $("micBtn").classList.add("on"); $("micBtn").innerHTML = "■<span class='lbl'> Stop</span>"; setState("listen", "Ti ascolto"); };
@@ -463,7 +503,7 @@ async function send(text) {
 // ---------- scheda e PDF ----------
 let finalScheda = null;
 function finishInterview() {
-  speechSynthesis && speechSynthesis.cancel(); stopMouth();
+  speechSynthesis && speechSynthesis.cancel(); try { player.pause(); } catch (e) {} stopMouth();
   finalScheda = mergeScheda(state.scheda, keywordScheda(state.answers));
   finalScheda.consigli = (state.consigli && state.consigli.length ? state.consigli : GENERAL_TIPS).slice(0, 5);
   const s = finalScheda, li = (a) => (a && a.length ? a.map(x => `<li>${esc(x)}</li>`).join("") : "<li>—</li>");
@@ -516,6 +556,7 @@ const avatarReady = initAvatar();
 $("startBtn").onclick = async () => {
   show("s-talk");
   if ("speechSynthesis" in window) { const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } // sblocca l'audio
+  unlockAudio();
   setState("think", "Si prepara");
   await Promise.race([avatarReady, new Promise(r => setTimeout(r, 6000))]);
   await avatarTurn("");
