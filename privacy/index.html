@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacy — demo · Facti, non parole · Team 19</title>
+<meta name="description" content="Privacy della demo Facti, non parole: cosa succede ai dati nel prototipo dell'hackathon.">
+<meta name="theme-color" content="#1A1D56">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../hub-assets/hub.css?v=1">
+<link rel="stylesheet" href="../come-abbiamo-lavorato/lavorato.css?v=1">
+</head>
+<body>
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<header class="hero small" id="top" style="min-height:55svh">
+  <div class="hero-in">
+    <a class="back" href="../">← Torna all'hub</a><br>
+    <p class="tag">Team 19 · H-ACK H-FARM College × Factanza · 21-22 novembre 2026</p>
+    <h1 class="hero-title" style="font-size:clamp(2.6rem,11vw,6rem)"><span class="ht1">Privacy</span><span class="ht2"><span class="bar y">demo</span></span></h1>
+    <p class="hero-lead">Questo sito è un prototipo dell'hackathon, fatto dal Team 19. Non è un prodotto ufficiale Factanza.</p>
+  </div>
+  <div class="blob b1" aria-hidden="true"></div><div class="blob b2" aria-hidden="true"></div><div class="blob b3" aria-hidden="true"></div>
+</header>
+
+<section class="wrap" aria-labelledby="t1">
+  <p class="note-strong reveal" style="margin-bottom:26px">⚠️ Non inserire dati sensibili nella demo: salute, documenti, indirizzo, dati di altre persone.</p>
+  <p class="kicker">1 · Oggi, nella demo</p>
+  <h2 id="t1" class="sec-title">Cosa succede <span class="bar c">davvero</span></h2>
+  <div class="grid2">
+    <div class="box reveal"><h3>Avatar · cosa scrivi o dici</h3><ul>
+      <li>Il testo della chat va al nostro Worker su <b>Cloudflare</b>.</li>
+      <li>Il Worker lo manda a <b>Google Gemini</b>, che prepara la risposta.</li>
+      <li>Il Worker non salva la chat. Nessun database.</li>
+      <li>Se c'è un errore, il Worker scrive solo il tipo di errore, non la chat.</li></ul></div>
+    <div class="box reveal"><h3>Avatar · la voce</h3><ul>
+      <li>Se parli, la voce la trascrive <b>il tuo browser</b>. In Chrome usa il servizio vocale di Google.</li>
+      <li>Al Worker arriva solo il testo, non l'audio.</li>
+      <li>La voce dell'avatar: il testo della <b>sua</b> risposta va a <b>ElevenLabs</b>, via Worker.</li>
+      <li>Puoi togliere la voce e scrivere.</li></ul></div>
+    <div class="box reveal"><h3>Avatar · limiti e PDF</h3><ul>
+      <li>Il Worker usa il tuo indirizzo IP solo per limitare le richieste (anti-abuso).</li>
+      <li>Il PDF con la scheda si crea <b>nel tuo browser</b>. Non viene inviato a nessuno.</li>
+      <li>Se chiudi la pagina, la chat sparisce.</li></ul></div>
+    <div class="box reveal"><h3>Quiz e LinkedIn</h3><ul>
+      <li>Il <b>quiz</b> funziona tutto nel browser. Le risposte non vengono inviate né salvate.</li>
+      <li>La pagina <b>LinkedIn</b> è una simulazione. Non invia dati.</li></ul></div>
+    <div class="box reveal"><h3>Cookie e statistiche</h3><ul>
+      <li>Noi non usiamo cookie, né statistiche, né pubblicità.</li>
+      <li>Il sito è su <b>GitHub Pages</b>.</li>
+      <li>Font e librerie arrivano da Google Fonts, cdnjs e jsDelivr. Questi servizi vedono il tuo IP quando le scaricano.</li></ul></div>
+    <div class="box navy reveal"><h3>Chi decide</h3><ul>
+      <li>L'avatar è un'intelligenza artificiale.</li>
+      <li>Non decide e non esclude nessuno.</li>
+      <li>La selezione la fa il team, con criteri precisi richiesti per il percorso.</li></ul></div>
+  </div>
+  <p class="small-note">Per Gemini, ElevenLabs e Cloudflare valgono anche le loro regole sulla privacy.</p>
+</section>
+
+<section class="wrap" aria-labelledby="t2" style="padding-top:2vh">
+  <p class="kicker">2 · Domani, nel prodotto vero</p>
+  <h2 id="t2" class="sec-title">Le nostre <span class="bar p">regole</span> <span class="label">Proposta</span></h2>
+  <ol class="steps">
+    <li class="step reveal"><span class="dot">1</span><div><h3>Informativa chiara e consenso</h3><p>Prima del colloquio, poche righe chiare. Si parte solo con il consenso.</p></div></li>
+    <li class="step reveal"><span class="dot">2</span><div><h3>I dati restano allo studente</h3><p>Factanza e le aziende ricevono solo la <b>categoria di hard skill</b>. Non i dati personali.</p></div></li>
+    <li class="step reveal"><span class="dot">3</span><div><h3>Solo per la selezione</h3><p>I dati servono solo per il percorso. Niente altri usi.</p></div></li>
+    <li class="step reveal"><span class="dot">4</span><div><h3>Per un tempo limitato</h3><p>Poi si cancellano.</p></div></li>
+    <li class="step reveal"><span class="dot">5</span><div><h3>Diritto di cancellazione</h3><p>Lo studente può chiedere di cancellare i suoi dati.</p></div></li>
+    <li class="step reveal"><span class="dot">6</span><div><h3>Decide una persona</h3><p>L'AI aiuta, ma la decisione è umana. Per l'AI Act, l'AI usata per selezionare persone è ad alto rischio. Il GDPR (art. 22) dà diritto a non subire decisioni solo automatiche.</p></div></li>
+  </ol>
+</section>
+
+<footer class="foot">
+  <p>Demo del Team 19 all'H-ACK H-FARM College × Factanza (21-22 novembre 2026) · Brief 3. Simulazione, non è un prodotto ufficiale Factanza.</p>
+  <p><a href="../">Hub</a> · <a href="../avatar/">Avatar</a> · <a href="../quiz/">Quiz</a> · <a href="../come-abbiamo-lavorato/">Come abbiamo lavorato</a></p>
+</footer>
+<script src="../hub-assets/hub.js?v=1" defer></script>
+</body>
+</html>

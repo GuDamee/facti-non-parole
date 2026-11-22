@@ -38,6 +38,8 @@ header.top .brand{font-family:"Archivo Black","Arial Black",sans-serif;text-tran
 .strip li small{display:block;font-weight:400;font-size:.8rem;margin-top:4px}
 .strip li.now{background:var(--yellow);color:#111;border-color:var(--yellow)}
 .note{font-size:.85rem;opacity:.9}
+.ai-notice{margin:0 0 16px;background:#fff;border:3px solid #1A1D56;border-left:10px solid #FF4BCD;border-radius:14px;padding:12px 16px;font-size:.98rem;line-height:1.45}.ai-notice b{display:block;margin-bottom:2px}.ai-notice .ai-small{display:block;margin-top:6px;font-size:.85rem}.ai-notice a{color:#1A1D56;font-weight:800}
+
 ul.clean{margin:0;padding-left:1.2em}ul.clean li{margin-bottom:.4em}
 button{font:inherit;font-weight:800;font-size:1.05rem;border:0;border-radius:12px;padding:18px 32px;min-height:60px;cursor:pointer;background:var(--ink);color:#fff;text-transform:uppercase;letter-spacing:.03em}
 button:focus-visible,input:focus-visible{outline:4px solid var(--orange);outline-offset:3px}
@@ -105,6 +107,11 @@ footer{margin-top:30px;font-size:.75rem;opacity:.7}
 
   <!-- 1. BENVENUTO -->
   <section class="screen on" id="s-intro">
+    <div class="ai-notice" role="note" id="aiNotice">
+      <b>🤖 Stai parlando con un'intelligenza artificiale.</b>
+      L'avatar non decide e non esclude nessuno: la selezione la fa il nostro team, in base a criteri precisi richiesti per il percorso.
+      <span class="ai-small">Non inserire dati sensibili. <a href="../privacy/">Privacy della demo</a></span>
+    </div>
     <div class="navy">
       <h1>Benvenuto <span class="bar y">e grazie!</span></h1>
       <p style="font-size:1.15rem">Grazie per esserti iscritto al <b>colloquio d'ingresso</b>.<br>È il primo passo del percorso.</p>
